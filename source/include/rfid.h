@@ -8,13 +8,17 @@
 #ifndef _RFID_H_
 #define _RFID_H_
 
+#include "sensor.h"
+#include "sensorsManager.h"
+
 struct rfid_pri {
 
 	int fd;
+	struct ipc_msg* ipc;
 };
 
-void rfid_sensor_init(char* pri);
-void rfid_readData(void);
+void rfid_sensor_init(char* pri, struct sensor* sensor);
+void rfid_readData(char* pri);
 
 #endif
 

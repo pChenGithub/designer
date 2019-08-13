@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include "sensorsManager.h"
+#include "vol.h"
+#include "rfid.h"
 
 struct sensorsManager sensorsManager;
 struct ipc_msg ipc_msg;

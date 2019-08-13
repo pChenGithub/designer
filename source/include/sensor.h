@@ -8,14 +8,17 @@
 #ifndef _SENSOR_H_
 #define _SENSOR_H_
 #include <string.h>
-#include "vol.h"
-#include "rfid.h"
+#include <stdlib.h>
+//#include "vol.h"
+//#include "rfid.h"
 #include "listNode.h"
 
 struct sensor {
 	struct node node;
 	char name[16];
-	void (*readData_task)(void);
+	struct sensorsManager* sM;
+	void (*readData_task)(char* pri);
+	void (*sensor_init)(char* pri, struct sensor* sensor);
 	char pri[32];
 };
 
@@ -24,7 +27,7 @@ struct sensor {
 	printf("sensor name %s \n", #s_name); \
 	memcpy(sensor->name, #s_name, strlen(#s_name)+1); \
 	sensor->readData_task = s_name##_readData; \
-	s_name##_sensor_init(sensor->pri); \
+	sensor->sensor_init = s_name##_sensor_init; \
 	sensor = sensor+0; \
 }) \
 

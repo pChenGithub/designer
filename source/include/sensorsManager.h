@@ -16,6 +16,7 @@ struct sensorsManager {
 	int freq;   // us
 	char s_count;
 	struct node* s_list;
+	/*ipc*/
 	char txBuf[BUFSIZE];
 	char rxBuf[BUFSIZE];
 	struct ipc_msg* ipc;

@@ -7,6 +7,7 @@
 
 #ifndef _LISTNODE_H_
 #define _LISTNODE_H_
+#include <stdio.h>
 
 struct node {
 	struct node* next;

@@ -8,6 +8,13 @@
 #include "sensorsManager.h"
 #include "listNode.h"
 
+static void sM_sync_event(struct sensorsManager* sM) {
+
+	/*msg ipc send */
+	ipcMsg_send(sM->ipc);
+//	sleep(1);
+}
+
 int sM_foreach_sensors(struct sensorsManager* sM) {
 
 	struct node* node = sM->s_list;
@@ -28,7 +35,8 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 //		s_task();
 
 		printf("sensor name %s \n", sensor->name);
-		sensor->readData_task();
+		sensor->readData_task(sensor->pri);
+		sM_sync_event(sM);
 
 		node = node->next;
 	}
@@ -50,6 +58,9 @@ int sM_add_sensor(struct sensorsManager* sM, struct sensor* sensor) {
 	}else {
 		insert(sM->s_list->pre, p);
 	}
+
+	sensor->sM = sM;
+	sensor->sensor_init(sensor->pri, sensor);
 
 	(*count) ++;
 

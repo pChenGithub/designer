@@ -9,14 +9,28 @@
 #define _VOL_H_
 
 #include "event.h"
+#include "sensor.h"
+#include "sensorsManager.h"
 
 struct vol_pri {
-
+	char* name;
 	int fd;
+	struct ipc_msg* ipc;
 };
 
-void vol_sensor_init(char* pri);
-void vol_readData(void);
+enum dat_t {
+	V,
+	I,
+	P
+};
+
+struct vol_data {
+	enum dat_t type;
+	float val;
+};
+
+void vol_sensor_init(char* pri, struct sensor* sensor);
+void vol_readData(char* pri);
 #endif
 
 
