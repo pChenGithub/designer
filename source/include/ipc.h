@@ -23,7 +23,6 @@ struct msgbuf {
 };
 
 struct ipc_msg {
-
 	int msgId;
 	struct msgbuf* rcvbuf;
 	size_t rcvTextLen;
@@ -34,7 +33,11 @@ struct ipc_msg {
 };
 
 enum chanel_t {
-	ZD_GAS = 10,
+	CHANEL_1 = 10,
+	CHANEL_2,
+	CHANEL_3,
+	CHANEL_4,
+	CHANEL_5,
 };
 
 int ipcMsg_init(struct ipc_msg *msgQuque, const char *file, const char c);
