@@ -8,6 +8,14 @@
 #include "sensorsManager.h"
 #include "listNode.h"
 
+void* sM_pthread_read(void* arg) {
+	struct sensorsManager* sM = (struct sensorsManager*)arg;
+//	pthread_detach(pthread_self());
+	while(1) {
+		sM_foreach_sensors(sM);
+	}
+}
+
 static void sM_sync_event(struct sensorsManager* sM) {
 
 	/*msg ipc send */
@@ -36,7 +44,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 
 		printf("sensor name %s \n", sensor->name);
 		sensor->readData_task(sensor->pri);
-		sM_sync_event(sM);
+//		sM_sync_event(sM);
 
 		node = node->next;
 	}

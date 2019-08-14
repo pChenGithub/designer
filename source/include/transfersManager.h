@@ -10,27 +10,34 @@
 
 #include "ipc.h"
 #include "transfer.h"
+#include "eventsManager.h"
+#include "event.h"
 
 #define MODECOUNT 3
 
-#define BUFSIZE 64
+//#define BUFSIZE 64
 struct transfersManager {
 	enum mode mode;
 	struct transfer* select;
 	struct transfer transfers[MODECOUNT];
+	struct eventsManager* eM;
 	/*ipc*/
-	char txBuf[BUFSIZE];
-	char rxBuf[BUFSIZE];
+//	char txBuf[BUFSIZE];
+//	char rxBuf[BUFSIZE];
+	struct msgbuf tx;
+	struct msgbuf rx;
 	struct ipc_msg* ipc;
 };
 
 #define TRANSFERSMANAGER_INIT(name) {\
 		struct transfersManager* p = &name; \
-		p->ipc->rcvbuf = (struct msgbuf*)(p->rxBuf); \
-		p->ipc->sndbuf = (struct msgbuf*)(p->txBuf); \
+		p->ipc->rcvbuf = & p->rx; \
+		p->ipc->sndbuf = & p->tx; \
 }
 
-void tM_hand_msg(void);
+void* tM_pthread_hand_event(void*);
+int tM_hand_event(struct transfersManager* tM);
+void tM_hand_msg(struct transfersManager* tM);
 
 #endif
 

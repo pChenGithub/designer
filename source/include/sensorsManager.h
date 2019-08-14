@@ -10,12 +10,14 @@
 
 #include <ipc.h>
 #include <sensor.h>
+#include "eventsManager.h"
 
 #define BUFSIZE 64
 struct sensorsManager {
 	int freq;   // us
 	char s_count;
 	struct node* s_list;
+	struct eventsManager* eM;
 	/*ipc*/
 	char txBuf[BUFSIZE];
 	char rxBuf[BUFSIZE];
@@ -24,13 +26,14 @@ struct sensorsManager {
 
 #define SENSORSMANAGER_INIT(name) {\
 	struct sensorsManager* p = &name; \
-	p->freq = 1000000; \
+	p->freq = 3000000; \
 	p->s_count = 0; \
 	p->s_list = NULL; \
 	p->ipc->rcvbuf = (struct msgbuf*)(p->rxBuf); \
 	p->ipc->sndbuf = (struct msgbuf*)(p->txBuf); \
 }
 
+void* sM_pthread_read(void*);
 int sM_foreach_sensors(struct sensorsManager* sM);
 int sM_add_sensor(struct sensorsManager* sM, struct sensor* sensor);
 void sM_del_sensor(struct sensor* sensor);

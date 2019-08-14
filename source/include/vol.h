@@ -11,11 +11,13 @@
 #include "event.h"
 #include "sensor.h"
 #include "sensorsManager.h"
+#include "eventsManager.h"
 
 struct vol_pri {
 	char* name;
 	int fd;
 	struct ipc_msg* ipc;
+	struct eventsManager* eM;
 };
 
 enum dat_t {
