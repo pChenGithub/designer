@@ -43,7 +43,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 //		s_task();
 
 		printf("sensor name %s \n", sensor->name);
-		sensor->readData_task(sensor->pri);
+		sensor->readData_task(sensor);
 //		sM_sync_event(sM);
 
 		node = node->next;

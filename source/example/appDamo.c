@@ -12,7 +12,10 @@
 #include "transfersManager.h"
 #include "eventsManager.h"
 #include "vol.h"
+#include "rfid.h"
+#include "runTime.h"
 
+static struct runTime runTime;
 static struct ipc_msg ipc_msg;
 static struct sensorsManager sensorsManager;
 static struct humansManager humansManager;
@@ -23,6 +26,10 @@ int main(int argc, char* argv[] ) {
 
 	struct sensor* sensor;
 	pthread_t pid;
+
+	EVENTSMANAGER_INIT(eventsManager);
+	eM_init(&eventsManager);
+
 /* sensorsManager */
 	sensorsManager.ipc = &ipc_msg;
 	sensorsManager.eM = & eventsManager;
@@ -31,15 +38,17 @@ int main(int argc, char* argv[] ) {
 
 	sensor = SENSOR_INIT(vol);
 	sM_add_sensor(&sensorsManager, sensor);
+	sensor = SENSOR_INIT(rfid);
+	sM_add_sensor(&sensorsManager, sensor);
 
 	pthread_create(&pid, NULL, sM_pthread_read, &sensorsManager);
 	pthread_detach(pid);
 /**/
 
 /* transfersManager */
-	transfersManager.ipc = &ipc_msg;
 	transfersManager.eM = &eventsManager;
 	TRANSFERSMANAGER_INIT(transfersManager);
+	tM_init(&transfersManager);
 
 	pthread_create(&pid, NULL, tM_pthread_hand_event, &transfersManager);
 	pthread_detach(pid);

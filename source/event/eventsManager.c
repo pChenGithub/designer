@@ -8,9 +8,14 @@
 #include <stdio.h>
 #include "eventsManager.h"
 
+void eM_init(struct eventsManager* eM) {
+	IPCSMG_INIT(eM->ipc);
+}
+
 int eM_add_event(struct eventsManager* eM, struct event* event) {
 	char* count = & eM->e_count;
 	struct node* p = (struct node*)event;
+	struct ipc_msg* ipc = & eM->ipc;
 
 	printf("event count %d \n", *count);
 
@@ -25,6 +30,9 @@ int eM_add_event(struct eventsManager* eM, struct event* event) {
 
 	(*count) ++;
 
+	/* notic */
+	ipc->sndbuf->mtype = CHANEL_1;
+	ipcMsg_send(ipc);
 	return 0;
 }
 

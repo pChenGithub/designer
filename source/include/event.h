@@ -12,6 +12,7 @@
 
 enum event_t {
 	DATA_GET,
+	HUMEN_OPT,
 	NOTICE,
 };
 
@@ -19,6 +20,7 @@ struct event {
 	struct node node;
 	enum event_t type;
 	struct eventsManager* eM;
+	struct sensor* sensor;
 	char pri[32];
 };
 

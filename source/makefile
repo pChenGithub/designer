@@ -7,9 +7,13 @@ INC= -I./include
 SRC_SRC = $(wildcard src/*.c)
 SRC_SENSORS = $(wildcard sensors/*.c)
 SRC_EVENT = $(wildcard event/*.c)
-SRC_TRANSFERS = $(wildcard transfers/*.c)
+SRC_TRANSFERS = $(wildcard transfers/*.c transfers/mqtt/*.c)
+SRC_LOG = $(wildcard log/*.c)
 
-all: $(EXE_PATH) $(EXE_PATH)/ipc_test $(EXE_PATH)/appDamo
+all: $(EXE_PATH) $(EXE_PATH)/ipc_test $(EXE_PATH)/appDamo $(EXE_PATH)/filetest
+
+$(EXE_PATH)/filetest: example/filetest.c $(SRC_LOG)
+	$(CC) $(INC) $^ -o $@
 
 $(EXE_PATH)/appDamo: example/appDamo.c $(SRC_SRC) $(SRC_SENSORS) $(SRC_EVENT) $(SRC_TRANSFERS)
 	$(CC) $(INC) $^ -o $@ -lpthread

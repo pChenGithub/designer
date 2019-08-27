@@ -31,8 +31,9 @@ struct vol_data {
 	float val;
 };
 
+void vol_parse(struct event* e, struct transfer* tr);
 void vol_sensor_init(char* pri, struct sensor* sensor);
-void vol_readData(char* pri);
+void vol_readData(struct sensor* sensor);
 #endif
 
 

@@ -16,10 +16,25 @@ struct eventsManager {
 	char e_count;
 	struct node* e_list;
 	struct sensorsManager* sM;
+	/* ipc */
+	struct msgbuf tx;
+	struct msgbuf rx;
+	struct ipc_msg ipc;
 };
 
+void eM_init(struct eventsManager* eM);
 int eM_add_event(struct eventsManager* eM, struct event* event);
 int eM_del_event(struct eventsManager* eM, struct event* event);
+
+#define EVENTSMANAGER_INIT(name) { \
+	struct eventsManager* p = &name; \
+	p->ipc.rcvbuf = & p->rx; \
+	p->ipc.sndbuf = & p->tx; \
+	p->ipc.rcvTextLen = 0; \
+	p->ipc.recv_flag = 0; \
+	p->ipc.sndTextLen = 0; \
+	p->ipc.send_flag = 0; \
+}
 
 #endif
 

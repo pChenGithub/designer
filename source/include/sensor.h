@@ -12,13 +12,16 @@
 //#include "vol.h"
 //#include "rfid.h"
 #include "listNode.h"
+#include "event.h"
+#include "transfer.h"
 
 struct sensor {
 	struct node node;
 	char name[16];
 	struct sensorsManager* sM;
-	void (*readData_task)(char* pri);
+	void (*readData_task)(struct sensor* sensor);
 	void (*sensor_init)(char* pri, struct sensor* sensor);
+	void (*parse_task)(struct event* e, struct transfer* tr);
 	char pri[32];
 };
 
@@ -28,6 +31,7 @@ struct sensor {
 	memcpy(sensor->name, #s_name, strlen(#s_name)+1); \
 	sensor->readData_task = s_name##_readData; \
 	sensor->sensor_init = s_name##_sensor_init; \
+	sensor->parse_task = s_name##_parse; \
 	sensor = sensor+0; \
 }) \
 

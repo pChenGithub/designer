@@ -15,7 +15,7 @@ int main(int argc, char* argv[] ) {
 
 	struct msgbuf* msg;
 	IPCSMG_INIT(ipc_msg);
-	ipc_msg.rcvbuf = rxBuf;
+	ipc_msg.rcvbuf = (struct msgbuf*)rxBuf;
 	ipc_msg.recv_flag = 0;
 	ipc_msg.rcvTextLen = 10;
 
@@ -26,7 +26,7 @@ int main(int argc, char* argv[] ) {
 	
 		msg->mtype = 0;
 		ipcMsg_recv(&ipc_msg);
-		printf("msg: type %d, ** %s ** \n", msg->mtype, msg->data);
+		printf("msg: type %ld, ** %s ** \n", msg->mtype, msg->data);
 
 	}
 

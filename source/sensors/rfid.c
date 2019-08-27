@@ -8,27 +8,40 @@
 #include <stdio.h>
 #include "rfid.h"
 #include "ipc.h"
+#include "mqtt_tr.h"
 
-void rfid_readData(char* pri) {
+#ifndef TR_MQTT
+#define TR_MQTT
+#endif
 
-	struct rfid_pri* p = (struct rfid_pri*)pri;
-	struct ipc_msg* ipc = (struct ipc_msg*)(p->ipc);
-	struct msgbuf* msg = ipc->sndbuf;
-//	enum dat_t type;
+void rfid_parse(struct event* e, struct transfer* tr) {
+	struct rfid_data* dat = (struct rfid_data*)e->pri;
+#ifdef TR_MQTT
+	struct mqtt_tr_pri* mqtt = (struct mqtt_tr_pri*)tr->pri;
+	char *msg = mqtt->application_message;
+	sprintf(msg, "temperature, val: %.02f", dat->t);
+#endif
+}
 
-	msg->mtype = 101;
-	ipc->send_flag = 0;
-	ipc->sndTextLen = 10;
+void rfid_readData(struct sensor* sensor) {
 
-	memcpy(msg->data, "rfid:1234\0\0", 11);
-	printf("is a rfid \n");
+	struct rfid_pri* p = (struct rfid_pri*)sensor->pri;
+	struct eventsManager* eM = sensor->sM->eM;
+	struct event* e = (struct event*)malloc(sizeof(struct event));
+	struct rfid_data* dat = (struct rfid_data*)e->pri;
+	
+	e->sensor = sensor;
+	e->type = DATA_GET;
+
+	dat->t = 29.5;
+	eM_add_event(eM, e);
 
 }
 
 void rfid_sensor_init(char* pri, struct sensor* sensor) {
 
 	struct rfid_pri* p = (struct rfid_pri*)pri;
-	p->ipc = sensor->sM->ipc;
+	p->name = sensor->name;
 }
 
 

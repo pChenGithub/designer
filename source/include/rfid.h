@@ -13,12 +13,17 @@
 
 struct rfid_pri {
 
+	char* name;
 	int fd;
-	struct ipc_msg* ipc;
 };
 
+struct rfid_data {
+	float t;
+};
+
+void rfid_parse(struct event* e, struct transfer* tr);
 void rfid_sensor_init(char* pri, struct sensor* sensor);
-void rfid_readData(char* pri);
+void rfid_readData(struct sensor* sensor);
 
 #endif
 

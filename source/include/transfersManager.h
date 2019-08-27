@@ -26,15 +26,18 @@ struct transfersManager {
 //	char rxBuf[BUFSIZE];
 	struct msgbuf tx;
 	struct msgbuf rx;
-	struct ipc_msg* ipc;
+	struct ipc_msg ipc;
 };
 
 #define TRANSFERSMANAGER_INIT(name) {\
 		struct transfersManager* p = &name; \
-		p->ipc->rcvbuf = & p->rx; \
-		p->ipc->sndbuf = & p->tx; \
+		p->ipc.rcvbuf = & p->rx; \
+		p->ipc.sndbuf = & p->tx; \
+	p->ipc.rcvTextLen = 0; \
+	p->ipc.recv_flag = 0;\
 }
 
+void tM_init(struct transfersManager* tM);
 void* tM_pthread_hand_event(void*);
 int tM_hand_event(struct transfersManager* tM);
 void tM_hand_msg(struct transfersManager* tM);

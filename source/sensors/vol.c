@@ -8,9 +8,26 @@
 #include "vol.h"
 #include "ipc.h"
 
-void vol_readData(char* pri) {
+
+#define TR_MQTT
+#ifdef TR_MQTT
+#include "mqtt_tr.h"
+#endif
+
+void vol_parse(struct event* e, struct transfer* tr) {
+
+	struct vol_data* dat = (struct vol_data*)e->pri;
+#ifdef TR_MQTT
+	struct mqtt_tr_pri* mqtt = (struct mqtt_tr_pri*)tr->pri;
+	char *msg = mqtt->application_message;
+	sprintf(msg, "type: %d, val: %.02f", dat->type, dat->val);
+#endif
+
+}
+
+void vol_readData(struct sensor* sensor) {
 	
-	struct vol_pri* p = (struct vol_pri*)pri;
+	struct vol_pri* p = (struct vol_pri*)(sensor->pri);
 	struct eventsManager* eM = p->eM;
 	/*
 	struct ipc_msg* ipc = (struct ipc_msg*)(p->ipc);
@@ -26,6 +43,7 @@ void vol_readData(char* pri) {
 	struct event* e = (struct event*)malloc(sizeof(struct event));
 	struct vol_data* dat;
 
+	e->sensor = sensor;
 	e->type = DATA_GET;
 	dat = (struct vol_data*)(e->pri);
 

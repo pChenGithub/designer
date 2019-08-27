@@ -7,7 +7,7 @@
 
 #ifndef _TRANSFER_H_
 #define _TRANSFER_H_
-
+#include "event.h"
 enum mode {
 	MQTT,
 	SOCKET,
@@ -17,9 +17,17 @@ enum mode {
 struct transfer {
 	enum mode mode;
 	char name[16];
-	void (*send_data)(void);
-	char pri[32];
+	void (*send_data)(struct transfer* tr, struct event* e);
+	void (*transfer_init)(struct transfer* tr);
+	char* pri;
 };
+
+#define TRANSFER_INIT(transfer, MQTT, name_s, mqtt_send, mqtt_init) { \
+	transfer->mode = MQTT; \
+	memcpy(transfer->name, #name_s, strlen(#name_s)+1); \
+	transfer->send_data = mqtt_send; \
+	transfer->transfer_init = mqtt_init; \
+}
 
 #endif
 
