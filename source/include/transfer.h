@@ -17,8 +17,9 @@ enum mode {
 struct transfer {
 	enum mode mode;
 	char name[16];
-	void (*send_data)(struct transfer* tr, struct event* e);
+	void (*send_data)(struct transfer* tr);
 	void (*transfer_init)(struct transfer* tr);
+	void (*transfer_reconnect)(struct transfer* tr);
 	char* pri;
 };
 

@@ -11,7 +11,6 @@
 void tM_init(struct transfersManager* tM) {
 	struct transfer* transfer;
 
-	IPCSMG_INIT(tM->ipc);
 	transfer = tM->transfers;
 	TRANSFER_INIT(transfer, MQTT, mqtt_tr1, mqtt_tr_send, mqtt_tr_init);
 	transfer++;
@@ -56,7 +55,7 @@ int tM_hand_event(struct transfersManager* tM) {
 
 
 	/* mqtt */
-	transfer->send_data(transfer, e);
+//	transfer->send_data(transfer, e);
 
 	free(e);
 }
@@ -72,3 +71,19 @@ void tM_hand_msg(struct transfersManager* tM) {
 
 	usleep(30000);
 }
+
+void tM_consume(struct transfersManager* tM) {
+	struct transfer* tr = tM->select;
+	struct mqtt_tr_pri* pri = (struct mqtt_tr_pri*)tr->pri;
+	char* msg = pri->application_message;
+	struct sensorsManager* sM = tM->sM;
+	char count = sM->s_count;
+	void* node = sM->s_list;
+	while(count--) {
+		sM->parse(&node, msg);
+		tr->send_data(tr);
+	}
+
+}
+
+

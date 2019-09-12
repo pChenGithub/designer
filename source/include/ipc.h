@@ -40,6 +40,12 @@ enum chanel_t {
 	CHANEL_5,
 };
 
+struct msg_body {
+	struct ipc_msg ipc;
+	struct msgbuf tx;
+	struct msgbuf rx;
+};
+
 int ipcMsg_init(struct ipc_msg *msgQuque, const char *file, const char c);
 int ipcMsg_recv(struct ipc_msg *msgQuque);
 int ipcMsg_send(struct ipc_msg *msgQuque);
@@ -48,6 +54,19 @@ int ipcMsg_send(struct ipc_msg *msgQuque);
 	struct ipc_msg* p = &name; \
 	ipcMsg_init(p, "/", 'x'); \
 }
+
+#define IPCSMG_INIT_SIMPLE(name) { \
+	struct msg_body* p = name; \
+	struct ipc_msg* ipc = &p->ipc; \
+	ipc->rcvbuf = &p->rx; \
+	ipc->rcvTextLen = 0; \
+	ipc->recv_flag = 0; \
+	ipc->sndbuf = &p->tx; \
+	ipc->sndTextLen = 0; \
+	ipc->send_flag =0; \
+	ipcMsg_init(ipc, "/", 'x'); \
+} \
+
 
 #endif
 

@@ -39,13 +39,13 @@ void publish_callback(void** unused, struct mqtt_response_publish *published)
 
 /*****************************************************************/
 
-void mqtt_tr_send(struct transfer* tr, struct event* e) {
+void mqtt_tr_send(struct transfer* tr) {
 	struct mqtt_tr_pri* p = (struct mqtt_tr_pri*)tr->pri;
 	struct mqtt_client* client = & p->client;
 	char* msg = p->application_message;
-	struct sensor* sensor = e->sensor;
+//	struct sensor* sensor = e->sensor;
 
-	sensor->parse_task(e, tr);
+//	sensor->parse_task(e, tr);
 
 	printf("mqtt send data \n");
 //	isprintf(msg, "hello, time is:%s", "12:30");

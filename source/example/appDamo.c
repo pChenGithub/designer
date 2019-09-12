@@ -14,13 +14,14 @@
 #include "vol.h"
 #include "rfid.h"
 #include "runTime.h"
+#include "pthread_task_com.h"
 
 static struct runTime runTime;
-static struct ipc_msg ipc_msg;
 static struct sensorsManager sensorsManager;
 static struct humansManager humansManager;
 static struct transfersManager transfersManager;
 static struct eventsManager eventsManager;
+static struct pthread_task_com task_product;
 
 int main(int argc, char* argv[] ) {
 
@@ -31,31 +32,43 @@ int main(int argc, char* argv[] ) {
 	eM_init(&eventsManager);
 
 /* sensorsManager */
-	sensorsManager.ipc = &ipc_msg;
 	sensorsManager.eM = & eventsManager;
 	SENSORSMANAGER_INIT(sensorsManager);
-	IPCSMG_INIT(ipc_msg);
 
+	sensor = SENSOR_INIT(pt100);
+	sM_add_sensor(&sensorsManager, sensor);
+	sensor = SENSOR_INIT(press303);
+	sM_add_sensor(&sensorsManager, sensor);
+#if 0
 	sensor = SENSOR_INIT(vol);
 	sM_add_sensor(&sensorsManager, sensor);
 	sensor = SENSOR_INIT(rfid);
 	sM_add_sensor(&sensorsManager, sensor);
+#endif
 
+#if 0
 	pthread_create(&pid, NULL, sM_pthread_read, &sensorsManager);
 	pthread_detach(pid);
+#endif
 /**/
-
+#if 1
 /* transfersManager */
 	transfersManager.eM = &eventsManager;
+	transfersManager.sM = &sensorsManager;
 	TRANSFERSMANAGER_INIT(transfersManager);
 	tM_init(&transfersManager);
-
+#if 0
 	pthread_create(&pid, NULL, tM_pthread_hand_event, &transfersManager);
 	pthread_detach(pid);
-/**/
+#endif
+	task_product.sM = &sensorsManager;
+	task_product.tM = &transfersManager;
+	pT_init(&task_product, PRODUCT);
 
+/**/
+#endif
 	while(1)
-		sleep(10);
+		sleep(60);
 
 	return 0;
 }

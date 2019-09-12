@@ -55,6 +55,14 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 	return 0;
 }
 
+void sM_parse4mqtt(void** arg, char* msg) {
+	struct sensor* sensor = (struct sensor*)*arg;
+	struct node* node = (struct node*)sensor;
+
+	sensor->parse_task4mqtt(sensor, msg);
+	*arg = node->next;
+}
+
 int sM_add_sensor(struct sensorsManager* sM, struct sensor* sensor) {
 
 	char* count = & sM->s_count;

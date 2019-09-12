@@ -22,8 +22,9 @@ struct mqtt_tr_pri {
 	uint8_t recvbuf[1024];
 };
 
-void mqtt_tr_send(struct transfer* tr, struct event* e);
+void mqtt_tr_send(struct transfer* tr);
 void mqtt_tr_init(struct transfer* tr);
+void mqtt_tr_reconnect(struct transfer* tr);
 #endif
 
 
