@@ -47,3 +47,6 @@ void open_nb_socket(BIO** bio, SSL_CTX** ssl_ctx, const char* addr, const char* 
 }
 
 #endif
+
+
+

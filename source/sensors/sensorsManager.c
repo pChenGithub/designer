@@ -58,7 +58,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 void sM_parse4mqtt(void** arg, char* msg) {
 	struct sensor* sensor = (struct sensor*)*arg;
 	struct node* node = (struct node*)sensor;
-
+	printf("parse sensor 4 mqtt \n");
 	sensor->parse_task4mqtt(sensor, msg);
 	*arg = node->next;
 }

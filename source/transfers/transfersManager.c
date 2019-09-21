@@ -12,11 +12,7 @@ void tM_init(struct transfersManager* tM) {
 	struct transfer* transfer;
 
 	transfer = tM->transfers;
-	TRANSFER_INIT(transfer, MQTT, mqtt_tr1, mqtt_tr_send, mqtt_tr_init);
-	transfer++;
-	TRANSFER_INIT(transfer, MQTT, mqtt_tr2, mqtt_tr_send, mqtt_tr_init);
-	transfer++;
-	TRANSFER_INIT(transfer, MQTT, mqtt_tr3, mqtt_tr_send, mqtt_tr_init);
+	TRANSFER_INIT(transfer, MQTT, mqtt);
 
 	tM->mode = MQTT;
 	tM->select = tM->transfers;

@@ -3,6 +3,7 @@
 #define _PTHREAD_TASK_COM_H_
 #include "sensorsManager.h"
 #include "transfersManager.h"
+#include "humansManager.h"
 
 enum ptask_type {
 	PRODUCT,
@@ -19,6 +20,7 @@ struct pthread_task_com {
 	void (*handle_event)(void);
 	struct sensorsManager* sM;
 	struct transfersManager* tM;
+	struct humansManager* hM;
 };
 
 static void* pT_task_product(void*);

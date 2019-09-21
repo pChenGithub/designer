@@ -56,8 +56,6 @@ enum MQTTErrors mqtt_sync(struct mqtt_client *client) {
     err = __mqtt_recv(client);
     if (err != MQTT_OK) return err;
 
-//	printf("xxxx xxxx 332323 \n");
-
     /* Call send */
     err = __mqtt_send(client);
     return err;
@@ -434,8 +432,6 @@ enum MQTTErrors __mqtt_ping(struct mqtt_client *client)
     ssize_t rv;
     struct mqtt_queued_message *msg;
 
-//	printf("mqtt ping xxxxxxxxxx \n");
-
     /* try to pack the message */
     MQTT_CLIENT_TRY_PACK(
         rv, msg, client, 
@@ -588,7 +584,6 @@ ssize_t __mqtt_send(struct mqtt_client *client)
     /* check for keep-alive */
     {
         mqtt_pal_time_t keep_alive_timeout = client->time_of_last_send + (mqtt_pal_time_t)((float)(client->keep_alive) * 0.75);
-		//printf("rrrrrrr tttttttt \n");
         if (MQTT_PAL_TIME() > keep_alive_timeout) {
           ssize_t rv = __mqtt_ping(client);
           if (rv != MQTT_OK) {

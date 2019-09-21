@@ -23,6 +23,7 @@ struct mqtt_tr_pri {
 };
 
 void mqtt_tr_send(struct transfer* tr);
+void mqtt_tr_recv(struct transfer* tr);
 void mqtt_tr_init(struct transfer* tr);
 void mqtt_tr_reconnect(struct transfer* tr);
 #endif

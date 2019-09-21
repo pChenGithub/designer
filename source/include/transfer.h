@@ -18,16 +18,18 @@ struct transfer {
 	enum mode mode;
 	char name[16];
 	void (*send_data)(struct transfer* tr);
+	void (*recv_data)(struct transfer* tr);
 	void (*transfer_init)(struct transfer* tr);
 	void (*transfer_reconnect)(struct transfer* tr);
 	char* pri;
 };
 
-#define TRANSFER_INIT(transfer, MQTT, name_s, mqtt_send, mqtt_init) { \
+#define TRANSFER_INIT(transfer, MQTT, name_s) { \
 	transfer->mode = MQTT; \
 	memcpy(transfer->name, #name_s, strlen(#name_s)+1); \
-	transfer->send_data = mqtt_send; \
-	transfer->transfer_init = mqtt_init; \
+	transfer->send_data = name_s##_tr_send; \
+	transfer->recv_data = name_s##_tr_recv; \
+	transfer->transfer_init = name_s##_tr_init; \
 }
 
 #endif

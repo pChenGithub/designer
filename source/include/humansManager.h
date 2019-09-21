@@ -7,30 +7,30 @@
 
 #ifndef _HUMANSMANAGER_H_
 #define _HUMANSMANAGER_H_
+#include "human.h"
+#include "humans/human_mqtt.h"
 
-#include "ipc.h"
-
-#define BUFSIZE 64
 struct humansManager {
+	int freq;
 	char h_count;
 	struct node* h_list;
-	/*ipc*/
-	char txBuf[BUFSIZE];
-	char rxBuf[BUFSIZE];
-	struct ipc_msg *ipc;
+	void (*wait_event)(void);
+	struct transfersManager* tM;
 };
+
+void hM_init(void);
+void hM_select_humans(void);
+int hM_add_human(struct humansManager* hM, struct human* human);
+void hM_del_hunam(void);
 
 #define HUMANSMANAGER_INIT(name) {\
 	struct humansManager* p = &name; \
+	p->freq = 100000; \
 	p->h_count = 0; \
 	p->h_list = NULL; \
-	p->ipc->rcvbuf = (struct msgbuf*)(p->rxBuf); \
-	p->ipc->sndbuf = (struct msgbuf*)(p->txBuf); \
-}
+	p->wait_event = hM_select_humans; \
+} \
 
-void hM_slect_humans(void);
-void hM_add_human(void);
-void hM_del_hunam(void);
 
 #endif
 

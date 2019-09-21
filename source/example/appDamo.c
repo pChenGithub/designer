@@ -22,10 +22,12 @@ static struct humansManager humansManager;
 static struct transfersManager transfersManager;
 static struct eventsManager eventsManager;
 static struct pthread_task_com task_product;
+static struct pthread_task_com task_wait_event;
 
 int main(int argc, char* argv[] ) {
 
 	struct sensor* sensor;
+	struct human* human;
 	pthread_t pid;
 
 	EVENTSMANAGER_INIT(eventsManager);
@@ -53,17 +55,31 @@ int main(int argc, char* argv[] ) {
 /**/
 #if 1
 /* transfersManager */
+#if 1
 	transfersManager.eM = &eventsManager;
 	transfersManager.sM = &sensorsManager;
 	TRANSFERSMANAGER_INIT(transfersManager);
 	tM_init(&transfersManager);
+#endif
 #if 0
 	pthread_create(&pid, NULL, tM_pthread_hand_event, &transfersManager);
 	pthread_detach(pid);
 #endif
+#if 1
 	task_product.sM = &sensorsManager;
 	task_product.tM = &transfersManager;
 	pT_init(&task_product, PRODUCT);
+#endif
+
+#if 0
+	HUMANSMANAGER_INIT(humansManager);
+	human = HUMAN_INIT(mqtt);
+	hM_add_human(&humansManager, human);
+
+	task_product.hM = &humansManager;
+	task_product.tM = &transfersManager;
+	pT_init(&task_wait_event, WAIT_EVENT);
+#endif
 
 /**/
 #endif
