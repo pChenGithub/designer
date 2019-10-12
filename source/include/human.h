@@ -9,14 +9,14 @@ struct human {
 	char name[16];
 	struct humansManager* hM;
 	void (*human_init)(struct human*);
-	void (*check_event)(void);
-	void (*hand_event)(void);
+	void (*check_event)(struct human*);
+	void (*hand_event)(struct human*);
 	char* pri;
 };
 
 #define HUMAN_INIT(h_name) ({ \
 	struct human* human = malloc(sizeof(struct human)); \
-	printf("human name %s \n", #h_name); \
+	printf("init human name %s \n", #h_name); \
 	memcpy(human->name, #h_name, strlen(#h_name)+1); \
 	human->check_event = h_name##_check_event; \
 	human->hand_event = h_name##_hand_event; \

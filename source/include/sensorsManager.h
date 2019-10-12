@@ -18,7 +18,7 @@
 struct sensorsManager {
 	int freq;   // us
 	char s_count;
-	void (*product)(struct sensorsManager*);
+	int (*product)(struct sensorsManager*);
 	void (*parse)(void**, char*);
 	struct node* s_list;
 	struct eventsManager* eM;

@@ -25,7 +25,7 @@ void* client_refresher(void* client)
 	while(1) 
 	{
 //		printf("sync %d\n", mqtt_sync((struct mqtt_client*) client));
-		mqtt_sync((struct mqtt_client*) client);
+		mqtt_sync_recv((struct mqtt_client*) client);
 		usleep(100000U);
 	}
 	return NULL;
@@ -74,7 +74,7 @@ void mqtt_tr_send(struct transfer* tr) {
 void mqtt_tr_recv(struct transfer* tr) {
 	struct mqtt_tr_pri* p = (struct mqtt_tr_pri*)tr->pri;
 	struct mqtt_client* client = & p->client;
-	//mqtt_sync_recv(client);
+	mqtt_sync(client);
 }
 
 void mqtt_tr_init(struct transfer* tr) {
@@ -90,7 +90,7 @@ void mqtt_tr_init(struct transfer* tr) {
 
 	sprintf(p->addr, "%s", "40.73.40.164");
 	sprintf(p->port, "%s", "11883");
-	sprintf(p->topic, "%s", "1234567890");
+	sprintf(p->topic, "%s", "msg2client");
 
 	sockfd = open_nb_socket(p->addr, p->port);
 	if (sockfd == -1) {
@@ -106,7 +106,7 @@ void mqtt_tr_init(struct transfer* tr) {
 		fprintf(stderr, "error: %s\n", mqtt_error_str(client->error));
 		exit_example(EXIT_FAILURE, sockfd, NULL);
 	}
-#if 1
+#if 0
 	pthread_t client_daemon;
 	if(pthread_create(&client_daemon, NULL, client_refresher, client)) {
 		fprintf(stderr, "Failed to start client daemon.\n");
@@ -117,6 +117,25 @@ void mqtt_tr_init(struct transfer* tr) {
 	printf("ready to begin publishing the time.\n");
 }
 
+void mqtt_tr_reconnect(struct transfer* tr) {
+	struct mqtt_tr_pri* p = (struct mqtt_tr_pri*)tr->pri;
+	int sockfd;
+	struct mqtt_client* client = & p->client;
+	sockfd = open_nb_socket(p->addr, p->port);
+	if (sockfd == -1) {
+		perror("Failed to open socket: ");
+		exit_example(EXIT_FAILURE, sockfd, NULL);
+	}
+
+//	printf("sizeof(p->sendbuf) %d, \n ", sizeof(p->sendbuf));
+
+	mqtt_init(client, sockfd, p->sendbuf, sizeof(p->sendbuf), p->recvbuf, sizeof(p->recvbuf), publish_callback);
+	mqtt_connect(client, "publishing_clientxxxxxxx", NULL, NULL, 0, NULL, NULL, 0, 5);
+	if (client->error != MQTT_OK) {
+		fprintf(stderr, "error: %s\n", mqtt_error_str(client->error));
+		exit_example(EXIT_FAILURE, sockfd, NULL);
+	}
+}
 
 
 

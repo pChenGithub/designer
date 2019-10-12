@@ -30,7 +30,8 @@ struct transfer {
 	transfer->send_data = name_s##_tr_send; \
 	transfer->recv_data = name_s##_tr_recv; \
 	transfer->transfer_init = name_s##_tr_init; \
-}
+	transfer->transfer_reconnect = name_s##_tr_reconnect; \
+}\
 
 #endif
 

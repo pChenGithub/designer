@@ -8,18 +8,19 @@
 #ifndef _HUMANSMANAGER_H_
 #define _HUMANSMANAGER_H_
 #include "human.h"
-#include "humans/human_mqtt.h"
+#include "transfersManager.h"
+//#include "humans/human_mqtt.h"
 
 struct humansManager {
 	int freq;
 	char h_count;
 	struct node* h_list;
-	void (*wait_event)(void);
+	int (*wait_event)(struct humansManager* hM);
 	struct transfersManager* tM;
 };
 
 void hM_init(void);
-void hM_select_humans(void);
+int hM_select_humans(struct humansManager* hM);
 int hM_add_human(struct humansManager* hM, struct human* human);
 void hM_del_hunam(void);
 

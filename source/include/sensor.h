@@ -9,8 +9,6 @@
 #define _SENSOR_H_
 #include <string.h>
 #include <stdlib.h>
-//#include "vol.h"
-//#include "rfid.h"
 #include "listNode.h"
 #include "event.h"
 #include "transfer.h"

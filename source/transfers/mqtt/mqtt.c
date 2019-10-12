@@ -61,6 +61,56 @@ enum MQTTErrors mqtt_sync(struct mqtt_client *client) {
     return err;
 }
 
+enum MQTTErrors mqtt_sync_send(struct mqtt_client *client) {
+    /* Recover from any errors */
+    enum MQTTErrors err;
+    MQTT_PAL_MUTEX_LOCK(&client->mutex);
+    if (client->error != MQTT_OK && client->reconnect_callback != NULL) {
+        client->reconnect_callback(client, &client->reconnect_state);
+        /* unlocked during CONNECT */
+    } else {
+        MQTT_PAL_MUTEX_UNLOCK(&client->mutex);
+    }
+
+    /* Call inspector callback if necessary */
+    
+    if (client->inspector_callback != NULL) {
+        MQTT_PAL_MUTEX_LOCK(&client->mutex);
+        err = client->inspector_callback(client);
+        MQTT_PAL_MUTEX_UNLOCK(&client->mutex);
+        if (err != MQTT_OK) return err;
+    }
+    /* Call send */
+	printf("call send ... \n");
+    err = __mqtt_send(client);
+    return err;
+}
+
+enum MQTTErrors mqtt_sync_recv(struct mqtt_client *client) {
+    /* Recover from any errors */
+    enum MQTTErrors err;
+    MQTT_PAL_MUTEX_LOCK(&client->mutex);
+    if (client->error != MQTT_OK && client->reconnect_callback != NULL) {
+        client->reconnect_callback(client, &client->reconnect_state);
+        /* unlocked during CONNECT */
+    } else {
+        MQTT_PAL_MUTEX_UNLOCK(&client->mutex);
+    }
+
+    /* Call inspector callback if necessary */
+    
+    if (client->inspector_callback != NULL) {
+        MQTT_PAL_MUTEX_LOCK(&client->mutex);
+        err = client->inspector_callback(client);
+        MQTT_PAL_MUTEX_UNLOCK(&client->mutex);
+        if (err != MQTT_OK) return err;
+    }
+
+    /* Call receive */
+    err = __mqtt_recv(client);
+    return err;
+}
+
 uint16_t __mqtt_next_pid(struct mqtt_client *client) {
     int pid_exists = 0;
     if (client->pid_lfsr == 0) {
@@ -1729,3 +1779,5 @@ const char* mqtt_error_str(enum MQTTErrors error) {
 }
 
 /** @endcond*/
+
+

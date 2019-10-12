@@ -18,7 +18,7 @@ EVENTSMANAGER_INIT	include/eventsManager.h	29;"	d
 EXE_PATH	makefile	/^EXE_PATH = bin$/;"	m
 GENERATE_ENUM	include/mqtt.h	200;"	d
 GENERATE_STRING	include/mqtt.h	207;"	d
-HUMANSMANAGER_INIT	include/humansManager.h	26;"	d
+HUMANSMANAGER_INIT	include/humansManager.h	27;"	d
 HUMAN_INIT	include/human.h	17;"	d
 HUMEN_OPT	include/event.h	/^	HUMEN_OPT,$/;"	e	enum:event_t
 I	include/vol.h	/^	I,$/;"	e	enum:dat_t
@@ -34,8 +34,8 @@ MQTTErrors	include/mqtt.h	/^enum MQTTErrors {$/;"	g
 MQTTPublishFlags	include/mqtt.h	/^enum MQTTPublishFlags {$/;"	g
 MQTTQueuedMessageState	include/mqtt.h	/^enum MQTTQueuedMessageState {$/;"	g
 MQTTSubackReturnCodes	include/mqtt.h	/^enum MQTTSubackReturnCodes {$/;"	g
-MQTT_BITFIELD_RULE_VIOLOATION	transfers/mqtt/mqtt.c	848;"	d	file:
-MQTT_CLIENT_TRY_PACK	transfers/mqtt/mqtt.c	183;"	d	file:
+MQTT_BITFIELD_RULE_VIOLOATION	transfers/mqtt/mqtt.c	898;"	d	file:
+MQTT_CLIENT_TRY_PACK	transfers/mqtt/mqtt.c	233;"	d	file:
 MQTT_CONNACK_ACCEPTED	include/mqtt.h	/^    MQTT_CONNACK_ACCEPTED = 0u,$/;"	e	enum:MQTTConnackReturnCode
 MQTT_CONNACK_REFUSED_BAD_USER_NAME_OR_PASSWORD	include/mqtt.h	/^    MQTT_CONNACK_REFUSED_BAD_USER_NAME_OR_PASSWORD = 4u,$/;"	e	enum:MQTTConnackReturnCode
 MQTT_CONNACK_REFUSED_IDENTIFIER_REJECTED	include/mqtt.h	/^    MQTT_CONNACK_REFUSED_IDENTIFIER_REJECTED = 2u,$/;"	e	enum:MQTTConnackReturnCode
@@ -96,8 +96,9 @@ ONLINE	include/runTime.h	/^	ONLINE,$/;"	e	enum:net_state
 P	include/vol.h	/^	P$/;"	e	enum:dat_t
 PRODUCT	include/pthread_task_com.h	/^	PRODUCT,$/;"	e	enum:ptask_type
 PWD	makefile	/^PWD=$(shell `pwd`)$/;"	m
+RUNTIME_INIT	include/runTime.h	37;"	d
 SENSORSMANAGER_INIT	include/sensorsManager.h	38;"	d
-SENSOR_INIT	include/sensor.h	29;"	d
+SENSOR_INIT	include/sensor.h	27;"	d
 SOCKET	include/transfer.h	/^	SOCKET,$/;"	e	enum:mode
 SRC_DRIVER	makefile	/^SRC_DRIVER = $(wildcard driver\/*.c)$/;"	m
 SRC_EVENT	makefile	/^SRC_EVENT = $(wildcard event\/*.c)$/;"	m
@@ -156,8 +157,9 @@ application_message	include/mqtt.h	/^    const void* application_message;$/;"	m	
 application_message	include/mqtt_tr.h	/^	char application_message[256];$/;"	m	struct:mqtt_tr_pri
 application_message_size	include/mqtt.h	/^    size_t application_message_size;$/;"	m	struct:mqtt_response_publish
 chanel_t	include/ipc.h	/^enum chanel_t {$/;"	g
-check_event	include/human.h	/^	void (*check_event)(void);$/;"	m	struct:human
-check_state	include/runTime.h	/^	void (*check_state)(void);$/;"	m	struct:runTime
+check_env	include/runTime.h	/^	void (*check_env)(struct runTime* rt);$/;"	m	struct:runTime
+check_event	include/human.h	/^	void (*check_event)(struct human*);$/;"	m	struct:human
+check_state	include/runTime.h	/^	void (*check_state)(struct runTime* rT);$/;"	m	struct:runTime
 client	include/mqtt_tr.h	/^	struct mqtt_client client;$/;"	m	struct:mqtt_tr_pri	typeref:struct:mqtt_tr_pri::mqtt_client
 client_refresher	transfers/mqtt/mqtt_tr.c	/^void* client_refresher(void* client)$/;"	f
 connack	include/mqtt.h	/^        struct mqtt_response_connack  connack;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_connack
@@ -205,11 +207,12 @@ hM	include/pthread_task_com.h	/^	struct humansManager* hM;$/;"	m	struct:pthread_
 hM_add_human	humans/humansManager.c	/^int hM_add_human(struct humansManager* hM, struct human* human) {$/;"	f
 hM_del_human	humans/humansManager.c	/^void hM_del_human() {}$/;"	f
 hM_init	humans/humansManager.c	/^void hM_init() {}$/;"	f
-hM_select_humans	humans/humansManager.c	/^void hM_select_humans() {$/;"	f
+hM_select_humans	humans/humansManager.c	/^int hM_select_humans(struct humansManager* hM) {$/;"	f
 h_count	include/humansManager.h	/^	char h_count;$/;"	m	struct:humansManager
 h_list	include/humansManager.h	/^	struct node* h_list;$/;"	m	struct:humansManager	typeref:struct:humansManager::node
-hand_event	include/human.h	/^	void (*hand_event)(void);$/;"	m	struct:human
+hand_event	include/human.h	/^	void (*hand_event)(struct human*);$/;"	m	struct:human
 handle_event	include/pthread_task_com.h	/^	void (*handle_event)(void);$/;"	m	struct:pthread_task_com
+hm	include/runTime.h	/^	struct humansManager* hm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::humansManager
 human	include/human.h	/^struct human {$/;"	s
 human_init	include/human.h	/^	void (*human_init)(struct human*);$/;"	m	struct:human
 human_mqtt_pri	include/humans/human_mqtt.h	/^struct human_mqtt_pri {$/;"	s
@@ -249,7 +252,7 @@ mode	include/transfer.h	/^enum mode {$/;"	g
 mode	include/transfersManager.h	/^	enum mode mode;$/;"	m	struct:transfersManager	typeref:enum:transfersManager::mode
 mq	include/mqtt.h	/^    struct mqtt_message_queue mq;$/;"	m	struct:mqtt_client	typeref:struct:mqtt_client::mqtt_message_queue
 mq	include/sensorsManager.h	/^	struct msg_body mq;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::msg_body
-mqtt_check_event	humans/human_mqtt.c	/^void mqtt_check_event() {}$/;"	f
+mqtt_check_event	humans/human_mqtt.c	/^void mqtt_check_event(struct human* human) {$/;"	f
 mqtt_client	include/mqtt.h	/^struct mqtt_client {$/;"	s
 mqtt_connect	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_connect(struct mqtt_client *client,$/;"	f
 mqtt_disconnect	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_disconnect(struct mqtt_client *client) $/;"	f
@@ -257,8 +260,8 @@ mqtt_error_str	transfers/mqtt/mqtt.c	/^const char* mqtt_error_str(enum MQTTError
 mqtt_fixed_header	include/mqtt.h	/^struct mqtt_fixed_header {$/;"	s
 mqtt_fixed_header_rule_violation	transfers/mqtt/mqtt.c	/^ssize_t mqtt_fixed_header_rule_violation(const struct mqtt_fixed_header *fixed_header) {$/;"	f
 mqtt_fixed_header_rules	transfers/mqtt/mqtt.c	/^} mqtt_fixed_header_rules = {$/;"	v	typeref:struct:__anon1
-mqtt_hand_event	humans/human_mqtt.c	/^void mqtt_hand_event() {}$/;"	f
-mqtt_human_init	humans/human_mqtt.c	/^void mqtt_human_init() {}$/;"	f
+mqtt_hand_event	humans/human_mqtt.c	/^void mqtt_hand_event(struct human* human) {$/;"	f
+mqtt_human_init	humans/human_mqtt.c	/^void mqtt_human_init(struct human* human) {$/;"	f
 mqtt_init	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_init(struct mqtt_client *client,$/;"	f
 mqtt_init_reconnect	transfers/mqtt/mqtt.c	/^void mqtt_init_reconnect(struct mqtt_client *client,$/;"	f
 mqtt_message_queue	include/mqtt.h	/^struct mqtt_message_queue {$/;"	s
@@ -299,8 +302,11 @@ mqtt_response_suback	include/mqtt.h	/^struct mqtt_response_suback {$/;"	s
 mqtt_response_unsuback	include/mqtt.h	/^struct mqtt_response_unsuback {$/;"	s
 mqtt_subscribe	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_subscribe(struct mqtt_client *client,$/;"	f
 mqtt_sync	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_sync(struct mqtt_client *client) {$/;"	f
+mqtt_sync_recv	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_sync_recv(struct mqtt_client *client) {$/;"	f
+mqtt_sync_send	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_sync_send(struct mqtt_client *client) {$/;"	f
 mqtt_tr_init	transfers/mqtt/mqtt_tr.c	/^void mqtt_tr_init(struct transfer* tr) {$/;"	f
 mqtt_tr_pri	include/mqtt_tr.h	/^struct mqtt_tr_pri {$/;"	s
+mqtt_tr_reconnect	transfers/mqtt/mqtt_tr.c	/^void mqtt_tr_reconnect(struct transfer* tr) {$/;"	f
 mqtt_tr_recv	transfers/mqtt/mqtt_tr.c	/^void mqtt_tr_recv(struct transfer* tr) {$/;"	f
 mqtt_tr_send	transfers/mqtt/mqtt_tr.c	/^void mqtt_tr_send(struct transfer* tr) {$/;"	f
 mqtt_unpack_connack_response	transfers/mqtt/mqtt.c	/^ssize_t mqtt_unpack_connack_response(struct mqtt_response *mqtt_response, const uint8_t *buf) {$/;"	f
@@ -331,11 +337,13 @@ node	include/sensor.h	/^	struct node node;$/;"	m	struct:sensor	typeref:struct:se
 num_return_codes	include/mqtt.h	/^    size_t num_return_codes;$/;"	m	struct:mqtt_response_suback
 number_of_keep_alives	include/mqtt.h	/^    int number_of_keep_alives;$/;"	m	struct:mqtt_client
 number_of_timeouts	include/mqtt.h	/^    int number_of_timeouts;$/;"	m	struct:mqtt_client
+object	include/runTime.h	/^	struct runTime_object object;$/;"	m	struct:runTime	typeref:struct:runTime::runTime_object
 open_nb_socket	transfers/mqtt/templates/bio_sockets.h	/^BIO* open_nb_socket(const char* addr, const char* port) {$/;"	f
 open_nb_socket	transfers/mqtt/templates/openssl_sockets.h	/^void open_nb_socket(BIO** bio, SSL_CTX** ssl_ctx, const char* addr, const char* port, const char* ca_file, const char* ca_path) {$/;"	f
 open_nb_socket	transfers/mqtt/templates/posix_sockets.h	/^int open_nb_socket(const char* addr, const char* port) {$/;"	f
 p	include/sensors/press303.h	/^	float p;$/;"	m	struct:press303_data
 pT_init	src/pthread_task_com.c	/^void pT_init(struct pthread_task_com* pt, enum ptask_type type) {$/;"	f
+pT_start	src/pthread_task_com.c	/^void pT_start(struct pthread_task_com* pt) {$/;"	f
 pT_task	include/pthread_task_com.h	/^	void* (*pT_task)(void*);$/;"	m	struct:pthread_task_com
 pT_task_product	src/pthread_task_com.c	/^void* pT_task_product(void* arg) {$/;"	f
 pT_task_waitEvent	src/pthread_task_com.c	/^void* pT_task_waitEvent(void* arg) {$/;"	f
@@ -365,8 +373,8 @@ pri	include/event.h	/^	char pri[32];$/;"	m	struct:event
 pri	include/human.h	/^	char* pri;$/;"	m	struct:human
 pri	include/sensor.h	/^	char *pri;$/;"	m	struct:sensor
 pri	include/transfer.h	/^	char* pri;$/;"	m	struct:transfer
-product	include/pthread_task_com.h	/^	void (*product)(struct sensorsManager*);$/;"	m	struct:pthread_task_com
-product	include/sensorsManager.h	/^	void (*product)(struct sensorsManager*);$/;"	m	struct:sensorsManager
+product	include/pthread_task_com.h	/^	int (*product)(struct sensorsManager*);$/;"	m	struct:pthread_task_com
+product	include/sensorsManager.h	/^	int (*product)(struct sensorsManager*);$/;"	m	struct:sensorsManager
 pt100_data	include/sensors/pt100.h	/^struct pt100_data {$/;"	s
 pt100_parse	sensors/sensors/pt100.c	/^void pt100_parse(struct event* e, struct transfer* tr) {$/;"	f
 pt100_parse4mqtt	sensors/sensors/pt100.c	/^void pt100_parse4mqtt(struct sensor* sensor, char* msg) {$/;"	f
@@ -386,6 +394,10 @@ pubrel	include/mqtt.h	/^        struct mqtt_response_pubrel   pubrel;$/;"	m	unio
 qos_level	include/mqtt.h	/^    uint8_t qos_level;$/;"	m	struct:mqtt_response_publish
 queue_tail	include/mqtt.h	/^    struct mqtt_queued_message *queue_tail;$/;"	m	struct:mqtt_message_queue	typeref:struct:mqtt_message_queue::mqtt_queued_message
 r	include/sensors/pt100.h	/^	float r;$/;"	m	struct:pt100_data
+rT_check_runTime_env	src/runTime.c	/^void rT_check_runTime_env() {$/;"	f
+rT_check_state	src/runTime.c	/^void rT_check_state(struct runTime* rT) {$/;"	f
+rT_offline_runtime	src/runTime.c	/^void rT_offline_runtime() {$/;"	f
+rT_online_runtime	src/runTime.c	/^void rT_online_runtime() {$/;"	f
 rcvTextLen	include/ipc.h	/^	size_t rcvTextLen;$/;"	m	struct:ipc_msg
 rcvbuf	include/ipc.h	/^	struct msgbuf* rcvbuf;$/;"	m	struct:ipc_msg	typeref:struct:ipc_msg::msgbuf
 readData_task	include/sensor.h	/^	void (*readData_task)(struct sensor* sensor);$/;"	m	struct:sensor
@@ -411,6 +423,7 @@ rfid_readData	sensors/rfid.c	/^void rfid_readData(struct sensor* sensor) {$/;"	f
 rfid_sensor_init	sensors/rfid.c	/^void rfid_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
 runTime	example/appDamo.c	/^static struct runTime runTime;$/;"	v	typeref:struct:runTime	file:
 runTime	include/runTime.h	/^struct runTime {$/;"	s
+runTime_object	include/runTime.h	/^struct runTime_object {$/;"	s
 rx	include/eventsManager.h	/^	struct msgbuf rx;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::msgbuf
 rx	include/ipc.h	/^	struct msgbuf rx;$/;"	m	struct:msg_body	typeref:struct:msg_body::msgbuf
 rx	include/transfersManager.h	/^	struct msgbuf rx;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::msgbuf
@@ -438,6 +451,7 @@ sensorsManager	example/sensorsMain.c	/^struct sensorsManager sensorsManager;$/;"
 sensorsManager	include/sensorsManager.h	/^struct sensorsManager {$/;"	s
 session_present_flag	include/mqtt.h	/^    uint8_t session_present_flag;$/;"	m	struct:mqtt_response_connack
 size	include/mqtt.h	/^    size_t size;$/;"	m	struct:mqtt_queued_message
+sm	include/runTime.h	/^	struct sensorsManager* sm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::sensorsManager
 sndTextLen	include/ipc.h	/^	size_t sndTextLen;$/;"	m	struct:ipc_msg
 sndbuf	include/ipc.h	/^	struct msgbuf* sndbuf;$/;"	m	struct:ipc_msg	typeref:struct:ipc_msg::msgbuf
 socketfd	include/mqtt.h	/^    mqtt_pal_socket_handle socketfd;$/;"	m	struct:mqtt_client
@@ -455,12 +469,16 @@ tM_hand_msg	transfers/transfersManager.c	/^void tM_hand_msg(struct transfersMana
 tM_init	transfers/transfersManager.c	/^void tM_init(struct transfersManager* tM) {$/;"	f
 tM_pthread_hand_event	transfers/transfersManager.c	/^void* tM_pthread_hand_event(void* arg) {$/;"	f
 task_product	example/appDamo.c	/^static struct pthread_task_com task_product;$/;"	v	typeref:struct:pthread_task_com	file:
+task_product	include/runTime.h	/^	struct pthread_task_com* task_product;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
 task_wait_event	example/appDamo.c	/^static struct pthread_task_com task_wait_event;$/;"	v	typeref:struct:pthread_task_com	file:
+task_wait_event	include/runTime.h	/^	struct pthread_task_com* task_wait_event;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
 time_of_last_send	include/mqtt.h	/^    mqtt_pal_time_t time_of_last_send;$/;"	m	struct:mqtt_client
 time_sent	include/mqtt.h	/^    mqtt_pal_time_t time_sent;$/;"	m	struct:mqtt_queued_message
+tm	include/runTime.h	/^	struct transfersManager* tm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::transfersManager
 topic	include/mqtt_tr.h	/^	char topic[64];$/;"	m	struct:mqtt_tr_pri
 topic_name	include/mqtt.h	/^    const void* topic_name;$/;"	m	struct:mqtt_response_publish
 topic_name_size	include/mqtt.h	/^    uint16_t topic_name_size;$/;"	m	struct:mqtt_response_publish
+tr	include/humans/human_mqtt.h	/^	struct transfer* tr;$/;"	m	struct:human_mqtt_pri	typeref:struct:human_mqtt_pri::transfer
 transfer	include/transfer.h	/^struct transfer {$/;"	s
 transfer_init	include/transfer.h	/^	void (*transfer_init)(struct transfer* tr);$/;"	m	struct:transfer
 transfer_reconnect	include/transfer.h	/^	void (*transfer_reconnect)(struct transfer* tr);$/;"	m	struct:transfer
@@ -484,5 +502,5 @@ vol_parse	sensors/vol.c	/^void vol_parse(struct event* e, struct transfer* tr) {
 vol_pri	include/vol.h	/^struct vol_pri {$/;"	s
 vol_readData	sensors/vol.c	/^void vol_readData(struct sensor* sensor) {$/;"	f
 vol_sensor_init	sensors/vol.c	/^void vol_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
-wait_event	include/humansManager.h	/^	void (*wait_event)(void);$/;"	m	struct:humansManager
-wait_event	include/pthread_task_com.h	/^	void (*wait_event)(void);$/;"	m	struct:pthread_task_com
+wait_event	include/humansManager.h	/^	int (*wait_event)(struct humansManager* hM);$/;"	m	struct:humansManager
+wait_event	include/pthread_task_com.h	/^	int (*wait_event)(struct humansManager*);$/;"	m	struct:pthread_task_com

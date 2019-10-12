@@ -1268,6 +1268,8 @@ ssize_t __mqtt_recv(struct mqtt_client *client);
  * @returns MQTT_OK upon success, an \ref MQTTErrors otherwise. 
  */
 enum MQTTErrors mqtt_sync(struct mqtt_client *client);
+enum MQTTErrors mqtt_sync_send(struct mqtt_client *client);
+enum MQTTErrors mqtt_sync_recv(struct mqtt_client *client);
 
 /**
  * @brief Initializes an MQTT client.
@@ -1557,3 +1559,6 @@ enum MQTTErrors __mqtt_ping(struct mqtt_client *client);
 enum MQTTErrors mqtt_disconnect(struct mqtt_client *client);
 
 #endif
+
+
+

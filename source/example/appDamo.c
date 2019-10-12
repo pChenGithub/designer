@@ -16,6 +16,8 @@
 #include "runTime.h"
 #include "pthread_task_com.h"
 
+#include "humans/human_mqtt.h"
+
 static struct runTime runTime;
 static struct sensorsManager sensorsManager;
 static struct humansManager humansManager;
@@ -28,13 +30,33 @@ int main(int argc, char* argv[] ) {
 
 	struct sensor* sensor;
 	struct human* human;
-	pthread_t pid;
+	struct runTime_object* obj;
+	struct pthread_task_com* task;
 
-	EVENTSMANAGER_INIT(eventsManager);
-	eM_init(&eventsManager);
+	RUNTIME_INIT(runTime);
+	PTHREAD_TASK_INIT(task_product, runTime);
+	PTHREAD_TASK_INIT(task_wait_event, runTime);
+
+	runTime.check_env(&runTime);
+
+	obj = &runTime.object;
+	obj->sm = &sensorsManager;
+	obj->hm = &humansManager;
+	obj->tm = &transfersManager;
+	obj->task_product = &task_product;
+	obj->task_wait_event = & task_wait_event;
+
+	task = obj->task_product;
+
+	task->init(task, PRODUCT);
+	task->start(task);
+
+
+
+
+
 
 /* sensorsManager */
-	sensorsManager.eM = & eventsManager;
 	SENSORSMANAGER_INIT(sensorsManager);
 
 	sensor = SENSOR_INIT(pt100);
@@ -71,20 +93,25 @@ int main(int argc, char* argv[] ) {
 	pT_init(&task_product, PRODUCT);
 #endif
 
-#if 0
+#if 1
+	humansManager.tM = &transfersManager;
 	HUMANSMANAGER_INIT(humansManager);
 	human = HUMAN_INIT(mqtt);
 	hM_add_human(&humansManager, human);
 
-	task_product.hM = &humansManager;
-	task_product.tM = &transfersManager;
+	task_wait_event.hM = &humansManager;
+	task_wait_event.tM = &transfersManager;
 	pT_init(&task_wait_event, WAIT_EVENT);
 #endif
 
 /**/
 #endif
-	while(1)
-		sleep(60);
+	printf("check runTime env \n");
+	while(1) {
+		/* net state */
+		runTime.check_state(&runTime);
+		sleep(10);
+	}
 
 	return 0;
 }

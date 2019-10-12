@@ -35,7 +35,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 		return -1;
 	}
 
-	printf("sensor count %d \n", count);
+//	printf("sensor count %d \n", count);
 
 	while (count--) {
 		sensor = (struct sensor*)node;
@@ -49,7 +49,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 		node = node->next;
 	}
 
-	printf("delay %d us \n", delay);
+//	printf("delay %d us \n", delay);
 	usleep(delay);
 
 	return 0;
