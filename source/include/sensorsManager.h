@@ -13,18 +13,15 @@
 #include "eventsManager.h"
 #include "sensors/pt100.h"
 #include "sensors/press303.h"
+#include "runTime.h"
 
 //#define BUFSIZE 64
 struct sensorsManager {
 	int freq;   // us
+	struct runTime* rt;
 	char s_count;
-	int (*product)(struct sensorsManager*);
-	void (*parse)(void**, char*);
 	struct node* s_list;
-	struct eventsManager* eM;
-	/*ipc*/
-	struct msg_body mq;
-	struct ipc_msg* ipc;
+	int (*product)(struct sensorsManager*);
 };
 
 //	IPCSMG_INIT_SIMPLE(mb); 
@@ -35,17 +32,14 @@ void sM_del_sensor(struct sensor* sensor);
 void sM_init(struct sensorsManager* sM);
 void sM_parse4mqtt(void** arg, char* msg);
 
-#define SENSORSMANAGER_INIT(name) {\
+#define SENSORSMANAGER_INIT(name, runTime) {\
 	struct sensorsManager* p = &name; \
-	struct msg_body* mb = &p->mq; \
 	p->freq = 3000000; \
+	p->rt = &runTime; \
 	p->s_count = 0; \
 	p->s_list = NULL; \
 	p->product = sM_foreach_sensors; \
-	p->parse = sM_parse4mqtt; \
-	p->ipc = &(p->mq.ipc); \
-	IPCSMG_INIT_SIMPLE(mb); \
-}
+} \
 
 #endif
 

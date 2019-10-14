@@ -1,13 +1,15 @@
 
 #include "humans/human_mqtt.h"
 #include "humansManager.h"
+#include "runTime.h"
 
 void mqtt_human_init(struct human* human) {
 	struct human_mqtt_pri* pri;
+	struct runTime_object* obj = & human->hM->rt->object;
 	printf("mqtt human init \n");
 	human->pri = malloc(sizeof(struct human_mqtt_pri));
 	pri = (struct human_mqtt_pri*)human->pri;
-	pri->tr = human->hM->tM->select;
+	pri->tr = obj->tm->select;
 	printf("mqtt human init done \n");
 }
 

@@ -1,10 +1,10 @@
 
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
-#include "sensorsManager.h"
-#include "humansManager.h"
-#include "transfersManager"
-#include "pthread_task_com.h"
+//#include "sensorsManager.h"
+//#include "humansManager.h"
+//#include "transfersManager.h"
+//#include "pthread_task_com.h"
 
 struct runTime_object {
 	struct sensorsManager* sm;

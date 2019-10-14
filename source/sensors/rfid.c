@@ -26,7 +26,6 @@ void rfid_parse(struct event* e, struct transfer* tr) {
 void rfid_readData(struct sensor* sensor) {
 
 	struct rfid_pri* p = (struct rfid_pri*)sensor->pri;
-	struct eventsManager* eM = sensor->sM->eM;
 	struct event* e = (struct event*)malloc(sizeof(struct event));
 	struct rfid_data* dat = (struct rfid_data*)e->pri;
 	
@@ -34,7 +33,6 @@ void rfid_readData(struct sensor* sensor) {
 	e->type = DATA_GET;
 
 	dat->t = 29.5;
-	eM_add_event(eM, e);
 
 }
 

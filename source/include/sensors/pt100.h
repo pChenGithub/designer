@@ -11,6 +11,7 @@ struct pt100_data {
 
 struct pt100_pri {
 	int fd;
+	float zero;
 	struct pt100_data data;
 };
 

@@ -2,31 +2,36 @@
 #include <stdio.h>
 #include <pthread.h>
 #include "pthread_task_com.h"
+#include "sensorsManager.h"
+#include "transfersManager.h"
+#include "humansManager.h"
 
 void pT_task_product_offline(struct pthread_task_com* pt) {
-
+	printf("product offline \n");
+	sleep(3);
 }
 
 void pT_task_product(struct pthread_task_com* pt) {
 	struct runTime_object* obj = & pt->rt->object;
 	struct sensorsManager* sm = obj->sm;
-	struct transfersManager* tm = obj->tm;
 
 	sm->product(sm);
-	tm->consume(tm);
 }
 
 void pT_task_waitEvent_offline(struct pthread_task_com* pt) {
-
+	printf("wait_event offline \n");
+	sleep(3);
 }
 void pT_task_waitEvent(struct pthread_task_com* pt) {
-
+	struct runTime_object* obj = & pt->rt->object;
+	struct humansManager* hm = obj->hm;
+	hm->wait_event(hm);
 }
 
 void* pT_thread_body(void* arg) {
 	struct pthread_task_com* pt = (struct pthread_task_com*)arg;
 	while(1) {
-		p->pT_task(pt);
+		pt->pT_task(pt);
 	}
 }
 

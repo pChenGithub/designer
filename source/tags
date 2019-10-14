@@ -18,7 +18,7 @@ EVENTSMANAGER_INIT	include/eventsManager.h	29;"	d
 EXE_PATH	makefile	/^EXE_PATH = bin$/;"	m
 GENERATE_ENUM	include/mqtt.h	200;"	d
 GENERATE_STRING	include/mqtt.h	207;"	d
-HUMANSMANAGER_INIT	include/humansManager.h	27;"	d
+HUMANSMANAGER_INIT	include/humansManager.h	28;"	d
 HUMAN_INIT	include/human.h	17;"	d
 HUMEN_OPT	include/event.h	/^	HUMEN_OPT,$/;"	e	enum:event_t
 I	include/vol.h	/^	I,$/;"	e	enum:dat_t
@@ -95,9 +95,10 @@ OFFLINE	include/runTime.h	/^	OFFLINE,$/;"	e	enum:net_state
 ONLINE	include/runTime.h	/^	ONLINE,$/;"	e	enum:net_state
 P	include/vol.h	/^	P$/;"	e	enum:dat_t
 PRODUCT	include/pthread_task_com.h	/^	PRODUCT,$/;"	e	enum:ptask_type
+PTHREAD_TASK_INIT	include/pthread_task_com.h	31;"	d
 PWD	makefile	/^PWD=$(shell `pwd`)$/;"	m
-RUNTIME_INIT	include/runTime.h	37;"	d
-SENSORSMANAGER_INIT	include/sensorsManager.h	38;"	d
+RUNTIME_INIT	include/runTime.h	31;"	d
+SENSORSMANAGER_INIT	include/sensorsManager.h	35;"	d
 SENSOR_INIT	include/sensor.h	27;"	d
 SOCKET	include/transfer.h	/^	SOCKET,$/;"	e	enum:mode
 SRC_DRIVER	makefile	/^SRC_DRIVER = $(wildcard driver\/*.c)$/;"	m
@@ -107,7 +108,7 @@ SRC_LOG	makefile	/^SRC_LOG = $(wildcard log\/*.c)$/;"	m
 SRC_SENSORS	makefile	/^SRC_SENSORS = $(wildcard sensors\/*.c sensors\/sensors\/*.c)$/;"	m
 SRC_SRC	makefile	/^SRC_SRC = $(wildcard src\/*.c)$/;"	m
 SRC_TRANSFERS	makefile	/^SRC_TRANSFERS = $(wildcard transfers\/*.c transfers\/mqtt\/*.c)$/;"	m
-TRANSFERSMANAGER_INIT	include/transfersManager.h	36;"	d
+TRANSFERSMANAGER_INIT	include/transfersManager.h	26;"	d
 TRANSFER_INIT	include/transfer.h	27;"	d
 TR_MQTT	sensors/rfid.c	14;"	d	file:
 TR_MQTT	sensors/vol.c	12;"	d	file:
@@ -122,6 +123,7 @@ _HUMAN_H_	include/human.h	3;"	d
 _IPC_H_	include/ipc.h	9;"	d
 _LISTNODE_H_	include/listNode.h	9;"	d
 _MQTT_TR_H_	include/mqtt_tr.h	9;"	d
+_OBJECT_H_	include/object.h	3;"	d
 _PRESS303_H_	include/sensors/press303.h	3;"	d
 _PT100_H_	include/sensors/pt100.h	3;"	d
 _PTHREAD_TASK_COM_H_	include/pthread_task_com.h	3;"	d
@@ -163,8 +165,6 @@ check_state	include/runTime.h	/^	void (*check_state)(struct runTime* rT);$/;"	m	
 client	include/mqtt_tr.h	/^	struct mqtt_client client;$/;"	m	struct:mqtt_tr_pri	typeref:struct:mqtt_tr_pri::mqtt_client
 client_refresher	transfers/mqtt/mqtt_tr.c	/^void* client_refresher(void* client)$/;"	f
 connack	include/mqtt.h	/^        struct mqtt_response_connack  connack;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_connack
-consume	include/pthread_task_com.h	/^	void (*consume)(struct transfersManager*);$/;"	m	struct:pthread_task_com
-consume	include/transfersManager.h	/^	void (*consume)(struct transfersManager*);$/;"	m	struct:transfersManager
 control_flags	include/mqtt.h	/^    uint32_t  control_flags: 4;$/;"	m	struct:mqtt_fixed_header
 control_type	include/mqtt.h	/^    enum MQTTControlPacketType control_type;$/;"	m	struct:mqtt_fixed_header	typeref:enum:mqtt_fixed_header::MQTTControlPacketType
 control_type	include/mqtt.h	/^    enum MQTTControlPacketType control_type;$/;"	m	struct:mqtt_queued_message	typeref:enum:mqtt_queued_message::MQTTControlPacketType
@@ -181,8 +181,6 @@ decoded	include/mqtt.h	/^    } decoded;$/;"	m	struct:mqtt_response	typeref:union
 dummy	include/mqtt.h	/^  int dummy;$/;"	m	struct:mqtt_response_pingresp
 dup_flag	include/mqtt.h	/^    uint8_t dup_flag;$/;"	m	struct:mqtt_response_publish
 eM	include/event.h	/^	struct eventsManager* eM;$/;"	m	struct:event	typeref:struct:event::eventsManager
-eM	include/sensorsManager.h	/^	struct eventsManager* eM;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::eventsManager
-eM	include/transfersManager.h	/^	struct eventsManager* eM;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::eventsManager
 eM	include/vol.h	/^	struct eventsManager* eM;$/;"	m	struct:vol_pri	typeref:struct:vol_pri::eventsManager
 eM_add_event	event/eventsManager.c	/^int eM_add_event(struct eventsManager* eM, struct event* event) {$/;"	f
 eM_del_event	event/eventsManager.c	/^int eM_del_event(struct eventsManager* eM, struct event* event) {$/;"	f
@@ -203,7 +201,6 @@ fixed_header	include/mqtt.h	/^    struct mqtt_fixed_header fixed_header;$/;"	m	s
 freq	include/humansManager.h	/^	int freq;$/;"	m	struct:humansManager
 freq	include/sensorsManager.h	/^	int freq;   \/\/ us$/;"	m	struct:sensorsManager
 hM	include/human.h	/^	struct humansManager* hM;$/;"	m	struct:human	typeref:struct:human::humansManager
-hM	include/pthread_task_com.h	/^	struct humansManager* hM;$/;"	m	struct:pthread_task_com	typeref:struct:pthread_task_com::humansManager
 hM_add_human	humans/humansManager.c	/^int hM_add_human(struct humansManager* hM, struct human* human) {$/;"	f
 hM_del_human	humans/humansManager.c	/^void hM_del_human() {}$/;"	f
 hM_init	humans/humansManager.c	/^void hM_init() {}$/;"	f
@@ -211,21 +208,19 @@ hM_select_humans	humans/humansManager.c	/^int hM_select_humans(struct humansMana
 h_count	include/humansManager.h	/^	char h_count;$/;"	m	struct:humansManager
 h_list	include/humansManager.h	/^	struct node* h_list;$/;"	m	struct:humansManager	typeref:struct:humansManager::node
 hand_event	include/human.h	/^	void (*hand_event)(struct human*);$/;"	m	struct:human
-handle_event	include/pthread_task_com.h	/^	void (*handle_event)(void);$/;"	m	struct:pthread_task_com
-hm	include/runTime.h	/^	struct humansManager* hm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::humansManager
+hm	include/object.h	/^	struct humansManager* hm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::humansManager
 human	include/human.h	/^struct human {$/;"	s
 human_init	include/human.h	/^	void (*human_init)(struct human*);$/;"	m	struct:human
 human_mqtt_pri	include/humans/human_mqtt.h	/^struct human_mqtt_pri {$/;"	s
 humansManager	example/appDamo.c	/^static struct humansManager humansManager;$/;"	v	typeref:struct:humansManager	file:
 humansManager	example/humansMain.c	/^static struct humansManager humansManager;$/;"	v	typeref:struct:humansManager	file:
 humansManager	include/humansManager.h	/^struct humansManager {$/;"	s
+init	include/pthread_task_com.h	/^	void (*init)(struct pthread_task_com* pt, enum ptask_type type);$/;"	m	struct:pthread_task_com
 insert	src/listNode.c	/^int insert(struct node* head, struct node* body) {$/;"	f
 insert_first	src/listNode.c	/^int insert_first(struct node* body) {$/;"	f
 inspector_callback	include/mqtt.h	/^    enum MQTTErrors (*inspector_callback)(struct mqtt_client*);$/;"	m	struct:mqtt_client	typeref:enum:mqtt_client::inspector_callback
 ipc	include/eventsManager.h	/^	struct ipc_msg ipc;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::ipc_msg
 ipc	include/ipc.h	/^	struct ipc_msg ipc;$/;"	m	struct:msg_body	typeref:struct:msg_body::ipc_msg
-ipc	include/sensorsManager.h	/^	struct ipc_msg* ipc;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::ipc_msg
-ipc	include/transfersManager.h	/^	struct ipc_msg ipc;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::ipc_msg
 ipc	include/vol.h	/^	struct ipc_msg* ipc;$/;"	m	struct:vol_pri	typeref:struct:vol_pri::ipc_msg
 ipcMsg_init	src/ipc.c	/^int ipcMsg_init(struct ipc_msg *msgQuque, const char *file, const char c) {$/;"	f
 ipcMsg_recv	src/ipc.c	/^int ipcMsg_recv(struct ipc_msg *msgQuque) {$/;"	f
@@ -251,7 +246,6 @@ mode	include/transfer.h	/^	enum mode mode;$/;"	m	struct:transfer	typeref:enum:tr
 mode	include/transfer.h	/^enum mode {$/;"	g
 mode	include/transfersManager.h	/^	enum mode mode;$/;"	m	struct:transfersManager	typeref:enum:transfersManager::mode
 mq	include/mqtt.h	/^    struct mqtt_message_queue mq;$/;"	m	struct:mqtt_client	typeref:struct:mqtt_client::mqtt_message_queue
-mq	include/sensorsManager.h	/^	struct msg_body mq;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::msg_body
 mqtt_check_event	humans/human_mqtt.c	/^void mqtt_check_event(struct human* human) {$/;"	f
 mqtt_client	include/mqtt.h	/^struct mqtt_client {$/;"	s
 mqtt_connect	transfers/mqtt/mqtt.c	/^enum MQTTErrors mqtt_connect(struct mqtt_client *client,$/;"	f
@@ -344,9 +338,15 @@ open_nb_socket	transfers/mqtt/templates/posix_sockets.h	/^int open_nb_socket(con
 p	include/sensors/press303.h	/^	float p;$/;"	m	struct:press303_data
 pT_init	src/pthread_task_com.c	/^void pT_init(struct pthread_task_com* pt, enum ptask_type type) {$/;"	f
 pT_start	src/pthread_task_com.c	/^void pT_start(struct pthread_task_com* pt) {$/;"	f
-pT_task	include/pthread_task_com.h	/^	void* (*pT_task)(void*);$/;"	m	struct:pthread_task_com
-pT_task_product	src/pthread_task_com.c	/^void* pT_task_product(void* arg) {$/;"	f
-pT_task_waitEvent	src/pthread_task_com.c	/^void* pT_task_waitEvent(void* arg) {$/;"	f
+pT_state_switch	src/pthread_task_com.c	/^void pT_state_switch(struct pthread_task_com* pt, char sta) {$/;"	f
+pT_task	include/pthread_task_com.h	/^	void (*pT_task)(struct pthread_task_com* pt);$/;"	m	struct:pthread_task_com
+pT_task_offline	include/pthread_task_com.h	/^	void (*pT_task_offline)(struct pthread_task_com* pt);$/;"	m	struct:pthread_task_com
+pT_task_online	include/pthread_task_com.h	/^	void (*pT_task_online)(struct pthread_task_com* pt);$/;"	m	struct:pthread_task_com
+pT_task_product	src/pthread_task_com.c	/^void pT_task_product(struct pthread_task_com* pt) {$/;"	f
+pT_task_product_offline	src/pthread_task_com.c	/^void pT_task_product_offline(struct pthread_task_com* pt) {$/;"	f
+pT_task_waitEvent	src/pthread_task_com.c	/^void pT_task_waitEvent(struct pthread_task_com* pt) {$/;"	f
+pT_task_waitEvent_offline	src/pthread_task_com.c	/^void pT_task_waitEvent_offline(struct pthread_task_com* pt) {$/;"	f
+pT_thread_body	src/pthread_task_com.c	/^void* pT_thread_body(void* arg) {$/;"	f
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_queued_message
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_puback
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_pubcomp
@@ -355,7 +355,6 @@ packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_pu
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_pubrel
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_suback
 packet_id	include/mqtt.h	/^    uint16_t packet_id;$/;"	m	struct:mqtt_response_unsuback
-parse	include/sensorsManager.h	/^	void (*parse)(void**, char*);$/;"	m	struct:sensorsManager
 parse_task	include/sensor.h	/^	void (*parse_task)(struct event* e, struct transfer* tr);$/;"	m	struct:sensor
 parse_task4mqtt	include/sensor.h	/^	void (*parse_task4mqtt)(struct sensor*, char*);$/;"	m	struct:sensor
 pid	include/pthread_task_com.h	/^	pthread_t pid;$/;"	m	struct:pthread_task_com
@@ -373,7 +372,6 @@ pri	include/event.h	/^	char pri[32];$/;"	m	struct:event
 pri	include/human.h	/^	char* pri;$/;"	m	struct:human
 pri	include/sensor.h	/^	char *pri;$/;"	m	struct:sensor
 pri	include/transfer.h	/^	char* pri;$/;"	m	struct:transfer
-product	include/pthread_task_com.h	/^	int (*product)(struct sensorsManager*);$/;"	m	struct:pthread_task_com
 product	include/sensorsManager.h	/^	int (*product)(struct sensorsManager*);$/;"	m	struct:sensorsManager
 pt100_data	include/sensors/pt100.h	/^struct pt100_data {$/;"	s
 pt100_parse	sensors/sensors/pt100.c	/^void pt100_parse(struct event* e, struct transfer* tr) {$/;"	f
@@ -382,6 +380,7 @@ pt100_pri	include/sensors/pt100.h	/^struct pt100_pri {$/;"	s
 pt100_readData	sensors/sensors/pt100.c	/^void pt100_readData(struct sensor* sensor) {$/;"	f
 pt100_sensor_init	sensors/sensors/pt100.c	/^void pt100_sensor_init(char* ppri, struct sensor* sensor) {$/;"	f
 ptask_type	include/pthread_task_com.h	/^enum ptask_type {$/;"	g
+pthread_body	include/pthread_task_com.h	/^	void* (*pthread_body)(void*);$/;"	m	struct:pthread_task_com
 pthread_task_com	include/pthread_task_com.h	/^struct pthread_task_com {$/;"	s
 puback	include/mqtt.h	/^        struct mqtt_response_puback   puback;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_puback
 pubcomp	include/mqtt.h	/^        struct mqtt_response_pubcomp  pubcomp;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_pubcomp
@@ -394,7 +393,7 @@ pubrel	include/mqtt.h	/^        struct mqtt_response_pubrel   pubrel;$/;"	m	unio
 qos_level	include/mqtt.h	/^    uint8_t qos_level;$/;"	m	struct:mqtt_response_publish
 queue_tail	include/mqtt.h	/^    struct mqtt_queued_message *queue_tail;$/;"	m	struct:mqtt_message_queue	typeref:struct:mqtt_message_queue::mqtt_queued_message
 r	include/sensors/pt100.h	/^	float r;$/;"	m	struct:pt100_data
-rT_check_runTime_env	src/runTime.c	/^void rT_check_runTime_env() {$/;"	f
+rT_check_runTime_env	src/runTime.c	/^void rT_check_runTime_env(struct runTime* rt) {$/;"	f
 rT_check_state	src/runTime.c	/^void rT_check_state(struct runTime* rT) {$/;"	f
 rT_offline_runtime	src/runTime.c	/^void rT_offline_runtime() {$/;"	f
 rT_online_runtime	src/runTime.c	/^void rT_online_runtime() {$/;"	f
@@ -421,17 +420,17 @@ rfid_parse	sensors/rfid.c	/^void rfid_parse(struct event* e, struct transfer* tr
 rfid_pri	include/rfid.h	/^struct rfid_pri {$/;"	s
 rfid_readData	sensors/rfid.c	/^void rfid_readData(struct sensor* sensor) {$/;"	f
 rfid_sensor_init	sensors/rfid.c	/^void rfid_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
+rt	include/humansManager.h	/^	struct runTime* rt;$/;"	m	struct:humansManager	typeref:struct:humansManager::runTime
+rt	include/pthread_task_com.h	/^	struct runTime* rt;$/;"	m	struct:pthread_task_com	typeref:struct:pthread_task_com::runTime
+rt	include/sensorsManager.h	/^	struct runTime* rt;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::runTime
 runTime	example/appDamo.c	/^static struct runTime runTime;$/;"	v	typeref:struct:runTime	file:
 runTime	include/runTime.h	/^struct runTime {$/;"	s
-runTime_object	include/runTime.h	/^struct runTime_object {$/;"	s
+runTime_object	include/object.h	/^struct runTime_object {$/;"	s
 rx	include/eventsManager.h	/^	struct msgbuf rx;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::msgbuf
 rx	include/ipc.h	/^	struct msgbuf rx;$/;"	m	struct:msg_body	typeref:struct:msg_body::msgbuf
-rx	include/transfersManager.h	/^	struct msgbuf rx;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::msgbuf
 rxBuf	example/ipc_test.c	/^char rxBuf[64];$/;"	v
 sM	include/eventsManager.h	/^	struct sensorsManager* sM;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::sensorsManager
-sM	include/pthread_task_com.h	/^	struct sensorsManager* sM;$/;"	m	struct:pthread_task_com	typeref:struct:pthread_task_com::sensorsManager
 sM	include/sensor.h	/^	struct sensorsManager* sM;$/;"	m	struct:sensor	typeref:struct:sensor::sensorsManager
-sM	include/transfersManager.h	/^	struct sensorsManager* sM;;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::sensorsManager
 sM_add_sensor	sensors/sensorsManager.c	/^int sM_add_sensor(struct sensorsManager* sM, struct sensor* sensor) {$/;"	f
 sM_foreach_sensors	sensors/sensorsManager.c	/^int sM_foreach_sensors(struct sensorsManager* sM) {$/;"	f
 sM_parse4mqtt	sensors/sensorsManager.c	/^void sM_parse4mqtt(void** arg, char* msg) {$/;"	f
@@ -451,30 +450,28 @@ sensorsManager	example/sensorsMain.c	/^struct sensorsManager sensorsManager;$/;"
 sensorsManager	include/sensorsManager.h	/^struct sensorsManager {$/;"	s
 session_present_flag	include/mqtt.h	/^    uint8_t session_present_flag;$/;"	m	struct:mqtt_response_connack
 size	include/mqtt.h	/^    size_t size;$/;"	m	struct:mqtt_queued_message
-sm	include/runTime.h	/^	struct sensorsManager* sm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::sensorsManager
+sm	include/object.h	/^	struct sensorsManager* sm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::sensorsManager
 sndTextLen	include/ipc.h	/^	size_t sndTextLen;$/;"	m	struct:ipc_msg
 sndbuf	include/ipc.h	/^	struct msgbuf* sndbuf;$/;"	m	struct:ipc_msg	typeref:struct:ipc_msg::msgbuf
 socketfd	include/mqtt.h	/^    mqtt_pal_socket_handle socketfd;$/;"	m	struct:mqtt_client
 start	include/mqtt.h	/^    uint8_t *start;$/;"	m	struct:mqtt_queued_message
+start	include/pthread_task_com.h	/^	void (*start)(struct pthread_task_com *pt);$/;"	m	struct:pthread_task_com
 state	include/mqtt.h	/^    enum MQTTQueuedMessageState state;$/;"	m	struct:mqtt_queued_message	typeref:enum:mqtt_queued_message::MQTTQueuedMessageState
 str_write_to_file	log/fileTools.c	/^int str_write_to_file(const char* file, const char* str) {$/;"	f
 suback	include/mqtt.h	/^        struct mqtt_response_suback   suback;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_suback
 t	include/rfid.h	/^	float t;$/;"	m	struct:rfid_data
 t	include/sensors/pt100.h	/^	float t;$/;"	m	struct:pt100_data
-tM	include/humansManager.h	/^	struct transfersManager* tM;$/;"	m	struct:humansManager	typeref:struct:humansManager::transfersManager
-tM	include/pthread_task_com.h	/^	struct transfersManager* tM;$/;"	m	struct:pthread_task_com	typeref:struct:pthread_task_com::transfersManager
-tM_consume	transfers/transfersManager.c	/^void tM_consume(struct transfersManager* tM) {$/;"	f
 tM_hand_event	transfers/transfersManager.c	/^int tM_hand_event(struct transfersManager* tM) {$/;"	f
 tM_hand_msg	transfers/transfersManager.c	/^void tM_hand_msg(struct transfersManager* tM) {$/;"	f
 tM_init	transfers/transfersManager.c	/^void tM_init(struct transfersManager* tM) {$/;"	f
 tM_pthread_hand_event	transfers/transfersManager.c	/^void* tM_pthread_hand_event(void* arg) {$/;"	f
 task_product	example/appDamo.c	/^static struct pthread_task_com task_product;$/;"	v	typeref:struct:pthread_task_com	file:
-task_product	include/runTime.h	/^	struct pthread_task_com* task_product;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
+task_product	include/object.h	/^	struct pthread_task_com* task_product;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
 task_wait_event	example/appDamo.c	/^static struct pthread_task_com task_wait_event;$/;"	v	typeref:struct:pthread_task_com	file:
-task_wait_event	include/runTime.h	/^	struct pthread_task_com* task_wait_event;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
+task_wait_event	include/object.h	/^	struct pthread_task_com* task_wait_event;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::pthread_task_com
 time_of_last_send	include/mqtt.h	/^    mqtt_pal_time_t time_of_last_send;$/;"	m	struct:mqtt_client
 time_sent	include/mqtt.h	/^    mqtt_pal_time_t time_sent;$/;"	m	struct:mqtt_queued_message
-tm	include/runTime.h	/^	struct transfersManager* tm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::transfersManager
+tm	include/object.h	/^	struct transfersManager* tm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::transfersManager
 topic	include/mqtt_tr.h	/^	char topic[64];$/;"	m	struct:mqtt_tr_pri
 topic_name	include/mqtt.h	/^    const void* topic_name;$/;"	m	struct:mqtt_response_publish
 topic_name_size	include/mqtt.h	/^    uint16_t topic_name_size;$/;"	m	struct:mqtt_response_publish
@@ -488,7 +485,6 @@ transfersManager	example/transfersMain.c	/^struct transfersManager transfersMana
 transfersManager	include/transfersManager.h	/^struct transfersManager {$/;"	s
 tx	include/eventsManager.h	/^	struct msgbuf tx;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::msgbuf
 tx	include/ipc.h	/^	struct msgbuf tx;$/;"	m	struct:msg_body	typeref:struct:msg_body::msgbuf
-tx	include/transfersManager.h	/^	struct msgbuf tx;$/;"	m	struct:transfersManager	typeref:struct:transfersManager::msgbuf
 type	include/event.h	/^	enum event_t type;$/;"	m	struct:event	typeref:enum:event::event_t
 type	include/pthread_task_com.h	/^	enum ptask_type type;$/;"	m	struct:pthread_task_com	typeref:enum:pthread_task_com::ptask_type
 type	include/vol.h	/^	enum dat_t type;$/;"	m	struct:vol_data	typeref:enum:vol_data::dat_t
@@ -503,4 +499,3 @@ vol_pri	include/vol.h	/^struct vol_pri {$/;"	s
 vol_readData	sensors/vol.c	/^void vol_readData(struct sensor* sensor) {$/;"	f
 vol_sensor_init	sensors/vol.c	/^void vol_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
 wait_event	include/humansManager.h	/^	int (*wait_event)(struct humansManager* hM);$/;"	m	struct:humansManager
-wait_event	include/pthread_task_com.h	/^	int (*wait_event)(struct humansManager*);$/;"	m	struct:pthread_task_com

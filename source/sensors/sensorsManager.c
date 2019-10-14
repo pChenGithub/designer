@@ -7,6 +7,8 @@
 
 #include "sensorsManager.h"
 #include "listNode.h"
+#include "transfersManager.h"
+#include "mqtt_tr.h"
 
 void* sM_pthread_read(void* arg) {
 	struct sensorsManager* sM = (struct sensorsManager*)arg;
@@ -19,7 +21,6 @@ void* sM_pthread_read(void* arg) {
 static void sM_sync_event(struct sensorsManager* sM) {
 
 	/*msg ipc send */
-	ipcMsg_send(sM->ipc);
 //	sleep(1);
 }
 
@@ -29,6 +30,10 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 	char count = sM->s_count;
 	int delay = sM->freq;
 	struct sensor* sensor;
+	struct runTime_object* obj = & sM->rt->object;
+	struct transfer* tr = obj->tm->select;
+	struct mqtt_tr_pri* pri = (struct mqtt_tr_pri*)tr->pri;
+	char* msg = pri->application_message;
 
 	if (!count) {
 		perror("sensors list is empty \n");
@@ -44,6 +49,8 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 
 		printf("sensor name %s \n", sensor->name);
 		sensor->readData_task(sensor);
+		sensor->parse_task4mqtt(sensor, msg);
+		tr->send_data(tr);
 //		sM_sync_event(sM);
 
 		node = node->next;

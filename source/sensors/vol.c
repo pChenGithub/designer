@@ -59,8 +59,6 @@ void vol_readData(struct sensor* sensor) {
 void vol_sensor_init(char* pri, struct sensor* sensor) {
 	struct vol_pri* p = (struct vol_pri*)pri;
 	printf("vol sensor init \n");
-	p->ipc = sensor->sM->ipc;
-	p->eM = sensor->sM->eM;
 }
 
 
