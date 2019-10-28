@@ -10,12 +10,12 @@
 #include "sensorsManager.h"
 #include "humansManager.h"
 #include "transfersManager.h"
+#include "filesManager.h"
 #include "eventsManager.h"
 #include "vol.h"
 #include "rfid.h"
 #include "runTime.h"
 #include "pthread_task_com.h"
-
 #include "humans/human_mqtt.h"
 
 static struct runTime runTime;
@@ -25,6 +25,7 @@ static struct transfersManager transfersManager;
 static struct eventsManager eventsManager;
 static struct pthread_task_com task_product;
 static struct pthread_task_com task_wait_event;
+static struct filesManager filesManager;
 
 int main(int argc, char* argv[] ) {
 
@@ -45,12 +46,16 @@ int main(int argc, char* argv[] ) {
 	obj->tm = &transfersManager;
 	obj->task_product = &task_product;
 	obj->task_wait_event = & task_wait_event;
+	obj->fm = & filesManager;
 
 	task = obj->task_product;
 	task->init(task, PRODUCT);
 	task = obj->task_wait_event;
 	task->init(task, WAIT_EVENT);
 	//task->start(task);
+
+	FILESMANAGER_INIT(filesManager, runTime);
+	fM_init(obj->fm);
 
 /* sensorsManager */
 	SENSORSMANAGER_INIT(sensorsManager, runTime);

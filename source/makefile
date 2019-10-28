@@ -1,9 +1,12 @@
 
+NVDIR=$(ROOTDIR)/lib/libnvram
 PWD=$(shell `pwd`)
 CC ?= gcc
 EXE_PATH = bin
 
-INC= -I./include
+INC += -I$(NVDIR) -I./include -I/home/linux/test/out_mips/include -I../../intelab/HMI
+CFLAGS += -L/home/linux/test/out_mips/lib -L../../intelab/MSGService -lmsg_service -L/home/linux/intelab/intelab_trunk_2.0/lib/libnvram \
+		  -L../../common -lunc_comm -L../../msc_comm -lumsc_comm
 
 SRC_SRC = $(wildcard src/*.c)
 SRC_SENSORS = $(wildcard sensors/*.c sensors/sensors/*.c)
@@ -20,7 +23,7 @@ $(EXE_PATH)/filetest: example/filetest.c $(SRC_LOG)
 
 $(EXE_PATH)/appDamo: example/appDamo.c $(SRC_SRC) $(SRC_SENSORS) \
 	$(SRC_EVENT) $(SRC_TRANSFERS) $(SRC_DRIVER) $(SRC_HUMAN)
-	$(CC) $(INC) $^ -o $@ -lpthread
+	$(CC) $(INC) $(CFLAGS) $^ -o $@ -lpthread -lcurl -lnvram
 
 $(EXE_PATH)/ipc_test: example/ipc_test.c $(SRC_SRC)
 	$(CC) $(INC) $^ -o $@

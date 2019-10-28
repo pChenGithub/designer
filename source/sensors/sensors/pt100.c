@@ -5,6 +5,9 @@
 #include <fcntl.h>
 #include "sensors/pt100.h"
 #include "driver/read_adc.h"
+#include "../MSGService/MSGService.h"
+#include "sensorsManager.h"
+
 #define ADC0 "/dev/ads1015_0"
 
 #define BELOW_LOW_LIMITE 0xcccc
@@ -107,9 +110,9 @@ void pt100_readData(struct sensor* sensor) {
 	tmp = *v;
 	*r = tmp*1000/(3.34-tmp);
 	*t = CalculateTemperature(*r);
-
+	tmp = mfg_read_drift_to_zero();
+	*t = *t+tmp;
 	printf("sensor %s read value %f \n", sensor->name, *v);
-
 }
 
 void pt100_parse(struct event* e, struct transfer* tr) {
@@ -120,7 +123,18 @@ void pt100_parse(struct event* e, struct transfer* tr) {
 void pt100_parse4mqtt(struct sensor* sensor, char* msg) {
 	struct pt100_pri* pri = (struct pt100_pri*)sensor->pri;
 	struct pt100_data* dat = & pri->data;
+	struct runTime* rt = sensor->sM->rt;
+	char tmp[8];
+	char len;
+	time_t t;
 
-	sprintf(msg, "pt100 get t %.02f ", dat->t);
+	t = time(NULL);
+	sprintf(tmp, "%.02f", dat->t);
+	len = strlen(tmp);
+
+	//sprintf(msg, "pt100 get t %.02f ", dat->t);
+	//086021060135000714+c+door+0+4+0.00+1571635693
+	//086021060252000098+a+temperature+0+5+82.28+1571900290
+	sprintf(msg, "%s+a+temperature+0+%d+%s+%d", rt->sn, len, tmp, t);
 }
 

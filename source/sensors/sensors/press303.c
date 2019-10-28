@@ -5,6 +5,8 @@
 #include <fcntl.h>
 #include "sensors/press303.h"
 #include "driver/read_adc.h"
+#include "sensorsManager.h"
+
 #define ADC6 "/dev/ads1015_6"
 
 
@@ -56,7 +58,13 @@ void press303_parse(struct event* e, struct transfer* tr) {
 void press303_parse4mqtt(struct sensor* sensor, char* msg) {
 	struct press303_pri* pri = (struct press303_pri*)sensor->pri;
 	struct press303_data* dat = & pri->data;
-
-	sprintf(msg, "press303 get press %.02f ", dat->p);
+	struct runTime* rt = sensor->sM->rt;
+	char tmp[8];
+	char len;
+	time_t t;
+	t = time(NULL);
+	sprintf(tmp, "%.02f", dat->p);
+	len = strlen(tmp);
+	sprintf(msg, "%s+e+pressure+0+%d+%s+%d", rt->sn, len, tmp, t);
 }
 

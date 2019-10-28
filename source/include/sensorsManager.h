@@ -22,11 +22,14 @@ struct sensorsManager {
 	char s_count;
 	struct node* s_list;
 	int (*product)(struct sensorsManager*);
+	int (*product_offline)(struct sensorsManager*);
+	void (*parse)(void**, char*);
 };
 
 //	IPCSMG_INIT_SIMPLE(mb); 
 void* sM_pthread_read(void*);
 int sM_foreach_sensors(struct sensorsManager* sM);
+int sM_foreach_sensors_offline(struct sensorsManager* sM);
 int sM_add_sensor(struct sensorsManager* sM, struct sensor* sensor);
 void sM_del_sensor(struct sensor* sensor);
 void sM_init(struct sensorsManager* sM);
@@ -39,7 +42,9 @@ void sM_parse4mqtt(void** arg, char* msg);
 	p->s_count = 0; \
 	p->s_list = NULL; \
 	p->product = sM_foreach_sensors; \
-} \
+	p->product_offline = sM_foreach_sensors_offline; \
+	p->parse = sM_parse4mqtt; \
+}
 
 #endif
 

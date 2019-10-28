@@ -12,6 +12,7 @@ struct runTime_object {
 	struct transfersManager* tm;
 	struct pthread_task_com* task_product;
 	struct pthread_task_com* task_wait_event;
+	struct filesManager* fm;
 };
 
 #endif

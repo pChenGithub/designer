@@ -1138,7 +1138,7 @@ struct mqtt_client {
      *       Use publish_response_callback_state to keep track of any state information you 
      *       need.
      */
-    void (*publish_response_callback)(void** state, struct mqtt_response_publish *publish);
+    void (*publish_response_callback)(struct mqtt_client* client, void** state, struct mqtt_response_publish *publish);
 
     /**
      * @brief A pointer to any publish_response_callback state information you need.
@@ -1207,6 +1207,7 @@ struct mqtt_client {
 
     /** @brief The sending message queue. */
     struct mqtt_message_queue mq;
+	char* rcv_msg;
 };
 
 /**
@@ -1308,7 +1309,7 @@ enum MQTTErrors mqtt_init(struct mqtt_client *client,
                           mqtt_pal_socket_handle sockfd,
                           uint8_t *sendbuf, size_t sendbufsz,
                           uint8_t *recvbuf, size_t recvbufsz,
-                          void (*publish_response_callback)(void** state, struct mqtt_response_publish *publish));
+                          void (*publish_response_callback)(struct mqtt_client* client, void** state, struct mqtt_response_publish *publish));
 
 /**
  * @brief Initializes an MQTT client and enables automatic reconnections.
@@ -1357,7 +1358,7 @@ enum MQTTErrors mqtt_init(struct mqtt_client *client,
 void mqtt_init_reconnect(struct mqtt_client *client,
                          void (*reconnect_callback)(struct mqtt_client *client, void** state),
                          void *reconnect_state,
-                         void (*publish_response_callback)(void** state, struct mqtt_response_publish *publish));
+                         void (*publish_response_callback)(struct mqtt_client* client, void** state, struct mqtt_response_publish *publish));
 
 /**
  * @brief Safely assign/reassign a socket and buffers to an new/existing client.

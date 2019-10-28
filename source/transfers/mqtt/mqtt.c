@@ -143,7 +143,7 @@ enum MQTTErrors mqtt_init(struct mqtt_client *client,
                mqtt_pal_socket_handle sockfd,
                uint8_t *sendbuf, size_t sendbufsz,
                uint8_t *recvbuf, size_t recvbufsz,
-               void (*publish_response_callback)(void** state,struct mqtt_response_publish *publish))
+               void (*publish_response_callback)(struct mqtt_client* client, void** state,struct mqtt_response_publish *publish))
 {
     if (client == NULL || sendbuf == NULL || recvbuf == NULL) {
         return MQTT_ERROR_NULLPTR;
@@ -180,7 +180,7 @@ enum MQTTErrors mqtt_init(struct mqtt_client *client,
 void mqtt_init_reconnect(struct mqtt_client *client,
                          void (*reconnect)(struct mqtt_client *, void**),
                          void *reconnect_state,
-                         void (*publish_response_callback)(void** state, struct mqtt_response_publish *publish))
+                         void (*publish_response_callback)(struct mqtt_client* client, void** state, struct mqtt_response_publish *publish))
 {
     /* initialize mutex */
     MQTT_PAL_MUTEX_INIT(&client->mutex);
@@ -762,7 +762,7 @@ ssize_t __mqtt_recv(struct mqtt_client *client)
                     }
                 }
                 /* call publish callback */
-                client->publish_response_callback(&client->publish_response_callback_state, &response.decoded.publish);
+                client->publish_response_callback(client, &client->publish_response_callback_state, &response.decoded.publish);
                 break;
             case MQTT_CONTROL_PUBACK:
                 /* release associated PUBLISH */

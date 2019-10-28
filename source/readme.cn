@@ -1,5 +1,22 @@
-传感器：pt100 press303
+传感器：
+pt100 
+press303
 
-功能：离线检测
+功能：
+离线检测
 mqtt离线重连
 任务进程离线任务切换
+离线存储消息
+上线上传消息 
+运行日志 ...
+productor manager ...
+
+反向控制：
+reboot
+version
+bezero 
+quebezero
+upddate
+serviceip 
+configfile ...
+

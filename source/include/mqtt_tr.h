@@ -17,13 +17,16 @@ struct mqtt_tr_pri {
 	char addr[16];
 	char port[16];
 	char topic[64];
+	char sub_topic[64];
+	char sn[19];
+	pthread_mutex_t lock_send_msg;
 	char application_message[256];
 	uint8_t sendbuf[2048];
 	uint8_t recvbuf[1024];
 };
 
 void mqtt_tr_send(struct transfer* tr);
-void mqtt_tr_recv(struct transfer* tr);
+void mqtt_tr_recv(struct transfer* tr, char* msg);
 void mqtt_tr_init(struct transfer* tr);
 void mqtt_tr_reconnect(struct transfer* tr);
 #endif

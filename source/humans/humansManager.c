@@ -47,7 +47,7 @@ int hM_select_humans(struct humansManager* hM) {
 		human = (struct human*)node;
 //		printf("human Name %s \n", human->name);
 		human->check_event(human);
-		human->hand_event(human);
+//		human->hand_event(human);
 		node = node->next;
 	}
 

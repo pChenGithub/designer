@@ -9,6 +9,7 @@
 #include "listNode.h"
 #include "transfersManager.h"
 #include "mqtt_tr.h"
+#include "filesManager.h"
 
 void* sM_pthread_read(void* arg) {
 	struct sensorsManager* sM = (struct sensorsManager*)arg;
@@ -24,6 +25,40 @@ static void sM_sync_event(struct sensorsManager* sM) {
 //	sleep(1);
 }
 
+int sM_foreach_sensors_offline(struct sensorsManager* sM) {
+	struct node* node = sM->s_list;
+	char count = sM->s_count;
+	int delay = sM->freq;
+	struct sensor* sensor;
+	struct runTime_object* obj = & sM->rt->object;
+	struct filesManager* fm = obj->fm;
+	char msg[64];
+	
+	if (!count) {
+		perror("sensors list is empty \n");
+		return -1;
+	}
+
+//	printf("sensor count %d \n", count);
+
+	while (count--) {
+		sensor = (struct sensor*)node;
+
+		printf("sensor name %s \n", sensor->name);
+		sensor->readData_task(sensor);
+		/* write to file */
+		sensor->parse_task4mqtt(sensor, msg);
+		strcat(msg, "\n");
+		fm->store_offline_msg(fm, msg);
+
+		node = node->next;
+	}
+
+	usleep(delay);
+
+	return 0;
+}
+
 int sM_foreach_sensors(struct sensorsManager* sM) {
 
 	struct node* node = sM->s_list;
@@ -34,6 +69,7 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 	struct transfer* tr = obj->tm->select;
 	struct mqtt_tr_pri* pri = (struct mqtt_tr_pri*)tr->pri;
 	char* msg = pri->application_message;
+	pthread_mutex_t* lock_send_msg = & pri->lock_send_msg;
 
 	if (!count) {
 		perror("sensors list is empty \n");
@@ -49,8 +85,10 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 
 		printf("sensor name %s \n", sensor->name);
 		sensor->readData_task(sensor);
+		pthread_mutex_lock(lock_send_msg);
 		sensor->parse_task4mqtt(sensor, msg);
 		tr->send_data(tr);
+		pthread_mutex_unlock(lock_send_msg);
 //		sM_sync_event(sM);
 
 		node = node->next;

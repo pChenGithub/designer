@@ -7,8 +7,10 @@
 #include "humansManager.h"
 
 void pT_task_product_offline(struct pthread_task_com* pt) {
-	printf("product offline \n");
-	sleep(3);
+	struct runTime_object* obj = & pt->rt->object;
+	struct sensorsManager* sm = obj->sm;
+
+	sm->product_offline(sm);
 }
 
 void pT_task_product(struct pthread_task_com* pt) {
