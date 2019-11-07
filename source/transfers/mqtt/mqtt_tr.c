@@ -47,6 +47,7 @@ void publish_callback(struct mqtt_client* client, void** unused, struct mqtt_res
 	msg[published->application_message_size] = '\0';
 
 	printf("topic: %s, msg %s \n", topic_name, msg);
+	free(topic_name);
 	//hand_msg(msg);
 #if 0   
 	free(topic_name);
@@ -152,7 +153,7 @@ void mqtt_tr_init(struct transfer* tr) {
 //	printf("sizeof(p->sendbuf) %d, \n ", sizeof(p->sendbuf));
 
 	mqtt_init(client, sockfd, p->sendbuf, sizeof(p->sendbuf), p->recvbuf, sizeof(p->recvbuf), publish_callback);
-	mqtt_connect(client, "publishing_clientxxxxxxx", NULL, NULL, 0, NULL, NULL, 0, 5);
+	mqtt_connect(client, p->sn, NULL, NULL, 0, NULL, NULL, 0, 5);
 	if (client->error != MQTT_OK) {
 		fprintf(stderr, "error: %s\n", mqtt_error_str(client->error));
 		exit_example(EXIT_FAILURE, sockfd, NULL);
@@ -190,6 +191,7 @@ void mqtt_tr_reconnect(struct transfer* tr) {
 			sleep(3);
 			continue;
 		}
+		mqtt_subscribe(client, p->sub_topic, 0);
 		sleep(3);
 		printf("mqtt reconnect done \n");
 		break;

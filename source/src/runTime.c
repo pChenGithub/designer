@@ -57,12 +57,18 @@ void rT_check_state(struct runTime* rT) {
 	}
 }
 
+#define TSEC2001 978278400
 void rT_check_runTime_env(struct runTime* rt) {
 	printf("ENTER: %s \n", __func__ );
+	time_t tsec;
 	/* online */
 	while (system("ping 223.6.6.6 -c 2 -W 2"))
 		sleep(3);
 	/* net time */
+	while (time(&tsec)<TSEC2001) {
+		printf("wait ntptime \n");
+		sleep(3);
+	}
 	/* sn */
 	mfg_read_sn(rt->sn, 18);
 	rt->sn[18] = '\0';

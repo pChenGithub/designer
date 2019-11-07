@@ -13,6 +13,7 @@ struct runTime_object {
 	struct pthread_task_com* task_product;
 	struct pthread_task_com* task_wait_event;
 	struct filesManager* fm;
+	struct producersManager* prom;
 };
 
 #endif

@@ -43,13 +43,11 @@ void pt100_sensor_init(char* ppri, struct sensor* sensor) {
 	struct pt100_pri* pri;
 	sensor->pri = malloc(sizeof(struct pt100_pri));
 	pri = (struct pt100_pri*)sensor->pri;
-
 	fd = open(ADC0, O_RDONLY);
 	if (fd<0) {
 		fprintf(stderr, "open  %s error \n", ADC0);
 		return ;
 	}
-
 	pri->fd = fd;
 }
 
@@ -94,7 +92,6 @@ float CalculateTemperature(float fR)
 	fLowRValue = RTD_TAB_PT100[cBottom];
 	fHighRValue = RTD_TAB_PT100[cTop];
 	fTem = (((fR - fLowRValue) * 5) / (fHighRValue - fLowRValue)) + iTem;	// 表格是以5度为一步的。
-																			// 两点内插进行运算。
 	return fTem;
 }
 
@@ -124,17 +121,17 @@ void pt100_parse4mqtt(struct sensor* sensor, char* msg) {
 	struct pt100_pri* pri = (struct pt100_pri*)sensor->pri;
 	struct pt100_data* dat = & pri->data;
 	struct runTime* rt = sensor->sM->rt;
-	char tmp[8];
+	char tmp[16]="12.63";
 	char len;
 	time_t t;
-
 	t = time(NULL);
 	sprintf(tmp, "%.02f", dat->t);
+#if 1
 	len = strlen(tmp);
-
 	//sprintf(msg, "pt100 get t %.02f ", dat->t);
 	//086021060135000714+c+door+0+4+0.00+1571635693
 	//086021060252000098+a+temperature+0+5+82.28+1571900290
 	sprintf(msg, "%s+a+temperature+0+%d+%s+%d", rt->sn, len, tmp, t);
+#endif
 }
 

@@ -13,6 +13,7 @@
 #include "eventsManager.h"
 #include "sensors/pt100.h"
 #include "sensors/press303.h"
+#include "sensors/sht20.h"
 #include "runTime.h"
 
 //#define BUFSIZE 64
@@ -24,6 +25,7 @@ struct sensorsManager {
 	int (*product)(struct sensorsManager*);
 	int (*product_offline)(struct sensorsManager*);
 	void (*parse)(void**, char*);
+	int (*add_sensor)(struct sensorsManager* sm, struct sensor* sensor);
 };
 
 //	IPCSMG_INIT_SIMPLE(mb); 
@@ -44,7 +46,9 @@ void sM_parse4mqtt(void** arg, char* msg);
 	p->product = sM_foreach_sensors; \
 	p->product_offline = sM_foreach_sensors_offline; \
 	p->parse = sM_parse4mqtt; \
-}
+	p->add_sensor = sM_add_sensor; \
+} \
+
 
 #endif
 

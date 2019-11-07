@@ -12,6 +12,7 @@
 #include "transfersManager.h"
 #include "filesManager.h"
 #include "eventsManager.h"
+#include "producersManager.h"
 #include "vol.h"
 #include "rfid.h"
 #include "runTime.h"
@@ -26,6 +27,7 @@ static struct eventsManager eventsManager;
 static struct pthread_task_com task_product;
 static struct pthread_task_com task_wait_event;
 static struct filesManager filesManager;
+static struct producersManager producersManager;
 
 int main(int argc, char* argv[] ) {
 
@@ -47,6 +49,7 @@ int main(int argc, char* argv[] ) {
 	obj->task_product = &task_product;
 	obj->task_wait_event = & task_wait_event;
 	obj->fm = & filesManager;
+	obj->prom = & producersManager;
 
 	task = obj->task_product;
 	task->init(task, PRODUCT);
@@ -59,10 +62,10 @@ int main(int argc, char* argv[] ) {
 
 /* sensorsManager */
 	SENSORSMANAGER_INIT(sensorsManager, runTime);
-	sensor = SENSOR_INIT(pt100);
-	sM_add_sensor(&sensorsManager, sensor);
-	sensor = SENSOR_INIT(press303);
-	sM_add_sensor(&sensorsManager, sensor);
+//	sensor = SENSOR_INIT(pt100);
+//	sM_add_sensor(&sensorsManager, sensor);
+//	sensor = SENSOR_INIT(press303);
+//	sM_add_sensor(&sensorsManager, sensor);
 #if 1
 /* transfersManager */
 #if 1
@@ -76,6 +79,14 @@ int main(int argc, char* argv[] ) {
 	human = HUMAN_INIT(mqtt);
 	hM_add_human(&humansManager, human);
 #endif
+#if 1
+	PRODUCERSMANAGER_INIT(producersManager, runTime);
+	if (producersManager.check_producer(&producersManager) <0) {
+		perror("has no env producer \n");
+		return -1;
+	}
+	producersManager.init_producer(&producersManager);
+#endif
 
 	task->start(obj->task_product);
 	task->start(obj->task_wait_event);
@@ -85,6 +96,7 @@ int main(int argc, char* argv[] ) {
 	while(1) {
 		/* net state */
 		runTime.check_state(&runTime);
+
 		sleep(10);
 	}
 

@@ -1,6 +1,9 @@
+大版本号 20.0.0.1
+
 传感器：
 pt100 
 press303
+sht20
 
 功能：
 离线检测
@@ -9,7 +12,8 @@ mqtt离线重连
 离线存储消息
 上线上传消息 
 运行日志 ...
-productor manager ...
+productor manager
+等待网络时间校准
 
 反向控制：
 reboot
@@ -19,4 +23,8 @@ quebezero
 upddate
 serviceip 
 configfile ...
+
+修复日志：
+mqtt重连增加订阅，解决重连没有订阅问题
+
 

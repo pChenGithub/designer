@@ -4,9 +4,9 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.6	//
-ADC0	sensors/sensors/pt100.c	10;"	d	file:
-ADC6	sensors/sensors/press303.c	8;"	d	file:
-BELOW_LOW_LIMITE	sensors/sensors/pt100.c	12;"	d	file:
+ADC0	sensors/sensors/pt100.c	11;"	d	file:
+ADC6	sensors/sensors/press303.c	10;"	d	file:
+BELOW_LOW_LIMITE	sensors/sensors/pt100.c	13;"	d	file:
 BLE_OE	include/transfer.h	/^	BLE_OE,$/;"	e	enum:mode
 CC	makefile	/^CC ?= gcc$/;"	m
 CHANEL_1	include/ipc.h	/^	CHANEL_1 = 10,$/;"	e	enum:chanel_t
@@ -17,9 +17,9 @@ CHANEL_5	include/ipc.h	/^	CHANEL_5,$/;"	e	enum:chanel_t
 CalculateTemperature	sensors/sensors/pt100.c	/^float CalculateTemperature(float fR)$/;"	f
 DATA_GET	include/event.h	/^	DATA_GET,$/;"	e	enum:event_t
 EVENTSMANAGER_INIT	include/eventsManager.h	29;"	d
-EXCESS_UP_LIMITE	sensors/sensors/pt100.c	13;"	d	file:
+EXCESS_UP_LIMITE	sensors/sensors/pt100.c	14;"	d	file:
 EXE_PATH	makefile	/^EXE_PATH = bin$/;"	m
-FILESMANAGER_INIT	include/filesManager.h	27;"	d
+FILESMANAGER_INIT	include/filesManager.h	30;"	d
 FtpFile	src/ftpget.c	/^struct FtpFile {$/;"	s	file:
 GENERATE_ENUM	include/mqtt.h	200;"	d
 GENERATE_STRING	include/mqtt.h	207;"	d
@@ -99,19 +99,29 @@ NVDIR	makefile	/^NVDIR=$(ROOTDIR)\/lib\/libnvram$/;"	m
 OFFLINE	include/runTime.h	/^	OFFLINE,$/;"	e	enum:net_state
 ONLINE	include/runTime.h	/^	ONLINE,$/;"	e	enum:net_state
 P	include/vol.h	/^	P$/;"	e	enum:dat_t
+PRODUCERSMANAGER_INIT	include/producersManager.h	16;"	d
 PRODUCT	include/pthread_task_com.h	/^	PRODUCT,$/;"	e	enum:ptask_type
+PRO_GUOHE	include/producer.h	/^	PRO_GUOHE,$/;"	e	enum:pro_type
+PRO_INIT	include/producer.h	21;"	d
+PRO_QUZHOU	include/producer.h	/^	PRO_QUZHOU,$/;"	e	enum:pro_type
+PRO_SGS	include/producer.h	/^	PRO_SGS,$/;"	e	enum:pro_type
+PRO_THERMO	include/producer.h	/^	PRO_THERMO,$/;"	e	enum:pro_type
+PRO_ZHEDA	include/producer.h	/^	PRO_ZHEDA,$/;"	e	enum:pro_type
+PRO_ZHEDA_SHT	include/producer.h	/^	PRO_ZHEDA_SHT,$/;"	e	enum:pro_type
 PTHREAD_TASK_INIT	include/pthread_task_com.h	33;"	d
 PWD	makefile	/^PWD=$(shell `pwd`)$/;"	m
 RENAME_FILE_TO	src/ftpupload.c	45;"	d	file:
 RTD_TAB_PT100	sensors/sensors/pt100.c	/^static float RTD_TAB_PT100[] = {$/;"	v	file:
-RUNTIME_INIT	include/runTime.h	34;"	d
-SENSORSMANAGER_INIT	include/sensorsManager.h	38;"	d
+RUNTIME_INIT	include/runTime.h	35;"	d
+SDP600_CheckCrc	sensors/sensors/sht20_t.c	/^static int SDP600_CheckCrc(unsigned char data[], unsigned char nbrOfBytes, unsigned char checksum)$/;"	f	file:
+SENSORSMANAGER_INIT	include/sensorsManager.h	41;"	d
 SENSOR_INIT	include/sensor.h	27;"	d
 SOCKET	include/transfer.h	/^	SOCKET,$/;"	e	enum:mode
 SRC_DRIVER	makefile	/^SRC_DRIVER = $(wildcard driver\/*.c)$/;"	m
 SRC_EVENT	makefile	/^SRC_EVENT = $(wildcard event\/*.c)$/;"	m
 SRC_HUMAN	makefile	/^SRC_HUMAN = $(wildcard humans\/*.c)$/;"	m
 SRC_LOG	makefile	/^SRC_LOG = $(wildcard log\/*.c)$/;"	m
+SRC_PRO	makefile	/^SRC_PRO = $(wildcard producers\/*.c)$/;"	m
 SRC_SENSORS	makefile	/^SRC_SENSORS = $(wildcard sensors\/*.c sensors\/sensors\/*.c)$/;"	m
 SRC_SRC	makefile	/^SRC_SRC = $(wildcard src\/*.c)$/;"	m
 SRC_TRANSFERS	makefile	/^SRC_TRANSFERS = $(wildcard transfers\/*.c transfers\/mqtt\/*.c)$/;"	m
@@ -137,16 +147,22 @@ _LISTNODE_H_	include/listNode.h	9;"	d
 _MQTT_TR_H_	include/mqtt_tr.h	9;"	d
 _OBJECT_H_	include/object.h	3;"	d
 _PRESS303_H_	include/sensors/press303.h	3;"	d
+_PRODUCER_H_	include/producer.h	3;"	d
+_PRODUCTORSMANAGER_H_	include/producersManager.h	3;"	d
 _PT100_H_	include/sensors/pt100.h	3;"	d
 _PTHREAD_TASK_COM_H_	include/pthread_task_com.h	3;"	d
+_QUZHOU_H_	include/producers/quzhou.h	3;"	d
 _READ_ADC_H_	include/driver/read_adc.h	3;"	d
 _RFID_H_	include/rfid.h	9;"	d
 _RUNTIME_H_	include/runTime.h	9;"	d
 _SENSORSMANAGER_H_	include/sensorsManager.h	9;"	d
 _SENSOR_H_	include/sensor.h	9;"	d
+_SHT20_H_H_	include/sensors/sht20_h.h	3;"	d
+_SHT20_T_H_	include/sensors/sht20_t.h	3;"	d
 _TRANSFERSMANAGER_H_	include/transfersManager.h	9;"	d
 _TRANSFER_H_	include/transfer.h	9;"	d
 _VOL_H_	include/vol.h	9;"	d
+_ZHEDA_SHT_H_	include/producers/zheda_sht.h	3;"	d
 __ALL_MQTT_ERRORS	include/mqtt.h	/^    __ALL_MQTT_ERRORS(GENERATE_ENUM)$/;"	e	enum:MQTTErrors
 __ALL_MQTT_ERRORS	include/mqtt.h	165;"	d
 __BIO_SOCKET_TEMPLATE_H__	transfers/mqtt/templates/bio_sockets.h	2;"	d
@@ -166,6 +182,7 @@ __mqtt_pubrel	transfers/mqtt/mqtt.c	/^ssize_t __mqtt_pubrel(struct mqtt_client *
 __mqtt_recv	transfers/mqtt/mqtt.c	/^ssize_t __mqtt_recv(struct mqtt_client *client) $/;"	f
 __mqtt_send	transfers/mqtt/mqtt.c	/^ssize_t __mqtt_send(struct mqtt_client *client) $/;"	f
 __mqtt_unpack_uint16	transfers/mqtt/mqtt.c	/^uint16_t __mqtt_unpack_uint16(const uint8_t *buf)$/;"	f
+add_sensor	include/sensorsManager.h	/^	int (*add_sensor)(struct sensorsManager* sm, struct sensor* sensor);$/;"	m	struct:sensorsManager
 addr	include/mqtt_tr.h	/^	char addr[16];$/;"	m	struct:mqtt_tr_pri
 application_message	include/mqtt.h	/^    const void* application_message;$/;"	m	struct:mqtt_response_publish
 application_message	include/mqtt_tr.h	/^	char application_message[256];$/;"	m	struct:mqtt_tr_pri
@@ -174,6 +191,7 @@ buf	include/humans/human_mqtt.h	/^	char buf[128];$/;"	m	struct:human_mqtt_pri
 chanel_t	include/ipc.h	/^enum chanel_t {$/;"	g
 check_env	include/runTime.h	/^	void (*check_env)(struct runTime* rt);$/;"	m	struct:runTime
 check_event	include/human.h	/^	void (*check_event)(struct human*);$/;"	m	struct:human
+check_producer	include/producersManager.h	/^	char (*check_producer)(struct producersManager* pm);$/;"	m	struct:producersManager
 check_serviceip	humans/human_mqtt.c	/^char check_serviceip(char* serviceip) {$/;"	f
 check_state	include/runTime.h	/^	void (*check_state)(struct runTime* rT);$/;"	m	struct:runTime
 client	include/mqtt_tr.h	/^	struct mqtt_client client;$/;"	m	struct:mqtt_tr_pri	typeref:struct:mqtt_tr_pri::mqtt_client
@@ -221,6 +239,8 @@ fM_upload_offline_msg	src/filesManager.c	/^void fM_upload_offline_msg(struct fil
 fd	include/rfid.h	/^	int fd;$/;"	m	struct:rfid_pri
 fd	include/sensors/press303.h	/^	int fd;$/;"	m	struct:press303_pri
 fd	include/sensors/pt100.h	/^	int fd;$/;"	m	struct:pt100_pri
+fd	include/sensors/sht20_h.h	/^	int fd;$/;"	m	struct:sht20_h_pri
+fd	include/sensors/sht20_t.h	/^	int fd;$/;"	m	struct:sht20_t_pri
 fd	include/vol.h	/^	int fd;$/;"	m	struct:vol_pri
 file_path	include/filesManager.h	/^	char file_path[16];$/;"	m	struct:filesManager
 filename	src/ftpget.c	/^  const char *filename;$/;"	m	struct:FtpFile	file:
@@ -248,7 +268,10 @@ human_mqtt_pri	include/humans/human_mqtt.h	/^struct human_mqtt_pri {$/;"	s
 humansManager	example/appDamo.c	/^static struct humansManager humansManager;$/;"	v	typeref:struct:humansManager	file:
 humansManager	example/humansMain.c	/^static struct humansManager humansManager;$/;"	v	typeref:struct:humansManager	file:
 humansManager	include/humansManager.h	/^struct humansManager {$/;"	s
+i2c_reset	sensors/sensors/sht20_t.c	/^void i2c_reset(void)$/;"	f
+init	include/producer.h	/^	void (*init)(struct producer* pro);$/;"	m	struct:producer
 init	include/pthread_task_com.h	/^	void (*init)(struct pthread_task_com* pt, enum ptask_type type);$/;"	m	struct:pthread_task_com
+init_producer	include/producersManager.h	/^	char (*init_producer)(struct producersManager* pm);$/;"	m	struct:producersManager
 insert	src/listNode.c	/^int insert(struct node* head, struct node* body) {$/;"	f
 insert_first	src/listNode.c	/^int insert_first(struct node* body) {$/;"	f
 inspector_callback	include/mqtt.h	/^    enum MQTTErrors (*inspector_callback)(struct mqtt_client*);$/;"	m	struct:mqtt_client	typeref:enum:mqtt_client::inspector_callback
@@ -358,6 +381,7 @@ mutex	include/mqtt.h	/^    mqtt_pal_mutex_t mutex;$/;"	m	struct:mqtt_client
 my_fwrite	src/ftpget.c	/^static size_t my_fwrite(void *buffer, size_t size, size_t nmemb, void *stream)$/;"	f	file:
 n_state	include/runTime.h	/^	enum net_state n_state;$/;"	m	struct:runTime	typeref:enum:runTime::net_state
 name	include/human.h	/^	char name[16];$/;"	m	struct:human
+name	include/producer.h	/^	char name[16];$/;"	m	struct:producer
 name	include/rfid.h	/^	char* name;$/;"	m	struct:rfid_pri
 name	include/sensor.h	/^	char name[16];$/;"	m	struct:sensor
 name	include/transfer.h	/^	char name[16];$/;"	m	struct:transfer
@@ -377,6 +401,8 @@ open_nb_socket	transfers/mqtt/templates/bio_sockets.h	/^BIO* open_nb_socket(cons
 open_nb_socket	transfers/mqtt/templates/openssl_sockets.h	/^void open_nb_socket(BIO** bio, SSL_CTX** ssl_ctx, const char* addr, const char* port, const char* ca_file, const char* ca_path) {$/;"	f
 open_nb_socket	transfers/mqtt/templates/posix_sockets.h	/^int open_nb_socket(const char* addr, const char* port) {$/;"	f
 p	include/sensors/press303.h	/^	float p;$/;"	m	struct:press303_data
+pM_check_producer	producers/producersManager.c	/^char pM_check_producer(struct producersManager* pm) {$/;"	f
+pM_init_producer	producers/producersManager.c	/^char pM_init_producer(struct producersManager* pm) {$/;"	f
 pT_init	src/pthread_task_com.c	/^void pT_init(struct pthread_task_com* pt, enum ptask_type type) {$/;"	f
 pT_start	src/pthread_task_com.c	/^void pT_start(struct pthread_task_com* pt) {$/;"	f
 pT_state_switch	src/pthread_task_com.c	/^void pT_state_switch(struct pthread_task_com* pt, char sta) {$/;"	f
@@ -402,6 +428,7 @@ parse_task4mqtt	include/sensor.h	/^	void (*parse_task4mqtt)(struct sensor*, char
 pid	include/pthread_task_com.h	/^	pthread_t pid;$/;"	m	struct:pthread_task_com
 pid_lfsr	include/mqtt.h	/^    uint16_t pid_lfsr;$/;"	m	struct:mqtt_client
 pingresp	include/mqtt.h	/^        struct mqtt_response_pingresp pingresp;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_pingresp
+pm	include/producer.h	/^	struct producersManager* pm;$/;"	m	struct:producer	typeref:struct:producer::producersManager
 port	include/mqtt_tr.h	/^	char port[16];$/;"	m	struct:mqtt_tr_pri
 pre	include/listNode.h	/^	struct node* pre;$/;"	m	struct:node	typeref:struct:node::node
 press303_data	include/sensors/press303.h	/^struct press303_data {$/;"	s
@@ -415,8 +442,14 @@ pri	include/human.h	/^	char* pri;$/;"	m	struct:human
 pri	include/sensor.h	/^	char *pri;$/;"	m	struct:sensor
 pri	include/transfer.h	/^	char* pri;$/;"	m	struct:transfer
 pri_dat	include/humans/human_mqtt.h	/^	char pri_dat[128];$/;"	m	struct:mqtt_msg_rcv
+pro	include/producersManager.h	/^	struct producer* pro;$/;"	m	struct:producersManager	typeref:struct:producersManager::producer
+pro_type	include/producer.h	/^enum pro_type {$/;"	g
+producer	include/producer.h	/^struct producer {$/;"	s
+producersManager	example/appDamo.c	/^static struct producersManager producersManager;$/;"	v	typeref:struct:producersManager	file:
+producersManager	include/producersManager.h	/^struct producersManager {$/;"	s
 product	include/sensorsManager.h	/^	int (*product)(struct sensorsManager*);$/;"	m	struct:sensorsManager
 product_offline	include/sensorsManager.h	/^	int (*product_offline)(struct sensorsManager*);$/;"	m	struct:sensorsManager
+prom	include/object.h	/^	struct producersManager* prom;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::producersManager
 pt100_data	include/sensors/pt100.h	/^struct pt100_data {$/;"	s
 pt100_parse	sensors/sensors/pt100.c	/^void pt100_parse(struct event* e, struct transfer* tr) {$/;"	f
 pt100_parse4mqtt	sensors/sensors/pt100.c	/^void pt100_parse4mqtt(struct sensor* sensor, char* msg) {$/;"	f
@@ -436,6 +469,7 @@ pubrec	include/mqtt.h	/^        struct mqtt_response_pubrec   pubrec;$/;"	m	unio
 pubrel	include/mqtt.h	/^        struct mqtt_response_pubrel   pubrel;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_pubrel
 qos_level	include/mqtt.h	/^    uint8_t qos_level;$/;"	m	struct:mqtt_response_publish
 queue_tail	include/mqtt.h	/^    struct mqtt_queued_message *queue_tail;$/;"	m	struct:mqtt_message_queue	typeref:struct:mqtt_message_queue::mqtt_queued_message
+quzhou_pro_init	producers/quzhou.c	/^void quzhou_pro_init(struct producer* pro) {$/;"	f
 r	include/sensors/pt100.h	/^	float r;$/;"	m	struct:pt100_data
 rT_check_runTime_env	src/runTime.c	/^void rT_check_runTime_env(struct runTime* rt) {$/;"	f
 rT_check_state	src/runTime.c	/^void rT_check_state(struct runTime* rT) {$/;"	f
@@ -467,7 +501,9 @@ rfid_parse	sensors/rfid.c	/^void rfid_parse(struct event* e, struct transfer* tr
 rfid_pri	include/rfid.h	/^struct rfid_pri {$/;"	s
 rfid_readData	sensors/rfid.c	/^void rfid_readData(struct sensor* sensor) {$/;"	f
 rfid_sensor_init	sensors/rfid.c	/^void rfid_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
+rt	include/filesManager.h	/^	struct runTime* rt;$/;"	m	struct:filesManager	typeref:struct:filesManager::runTime
 rt	include/humansManager.h	/^	struct runTime* rt;$/;"	m	struct:humansManager	typeref:struct:humansManager::runTime
+rt	include/producersManager.h	/^	struct runTime* rt;$/;"	m	struct:producersManager	typeref:struct:producersManager::runTime
 rt	include/pthread_task_com.h	/^	struct runTime* rt;$/;"	m	struct:pthread_task_com	typeref:struct:pthread_task_com::runTime
 rt	include/sensorsManager.h	/^	struct runTime* rt;$/;"	m	struct:sensorsManager	typeref:struct:sensorsManager::runTime
 runTime	example/appDamo.c	/^static struct runTime runTime;$/;"	v	typeref:struct:runTime	file:
@@ -498,8 +534,20 @@ sensorsManager	example/appDamo.c	/^static struct sensorsManager sensorsManager;$
 sensorsManager	example/sensorsMain.c	/^struct sensorsManager sensorsManager;$/;"	v	typeref:struct:sensorsManager
 sensorsManager	include/sensorsManager.h	/^struct sensorsManager {$/;"	s
 session_present_flag	include/mqtt.h	/^    uint8_t session_present_flag;$/;"	m	struct:mqtt_response_connack
+sht20_h_parse	sensors/sensors/sht20_h.c	/^void sht20_h_parse(struct event* e, struct transfer* tr) {$/;"	f
+sht20_h_parse4mqtt	sensors/sensors/sht20_h.c	/^void sht20_h_parse4mqtt(struct sensor* sensor, char* msg) {$/;"	f
+sht20_h_pri	include/sensors/sht20_h.h	/^struct sht20_h_pri {$/;"	s
+sht20_h_readData	sensors/sensors/sht20_h.c	/^void sht20_h_readData(struct sensor* sensor) {$/;"	f
+sht20_h_sensor_init	sensors/sensors/sht20_h.c	/^void sht20_h_sensor_init(char* ppri, struct sensor* sensor) {$/;"	f
+sht20_t_parse	sensors/sensors/sht20_t.c	/^void sht20_t_parse(struct event* e, struct transfer* tr) {$/;"	f
+sht20_t_parse4mqtt	sensors/sensors/sht20_t.c	/^void sht20_t_parse4mqtt(struct sensor* sensor, char* msg) {$/;"	f
+sht20_t_pri	include/sensors/sht20_t.h	/^struct sht20_t_pri {$/;"	s
+sht20_t_readData	sensors/sensors/sht20_t.c	/^void sht20_t_readData(struct sensor* sensor) {$/;"	f
+sht20_t_sensor_init	sensors/sensors/sht20_t.c	/^void sht20_t_sensor_init(char* ppri, struct sensor* sensor) {$/;"	f
 size	include/mqtt.h	/^    size_t size;$/;"	m	struct:mqtt_queued_message
 sm	include/object.h	/^	struct sensorsManager* sm;$/;"	m	struct:runTime_object	typeref:struct:runTime_object::sensorsManager
+sn	include/mqtt_tr.h	/^	char sn[19];$/;"	m	struct:mqtt_tr_pri
+sn	include/runTime.h	/^	char sn[19];$/;"	m	struct:runTime
 sndTextLen	include/ipc.h	/^	size_t sndTextLen;$/;"	m	struct:ipc_msg
 sndbuf	include/ipc.h	/^	struct msgbuf* sndbuf;$/;"	m	struct:ipc_msg	typeref:struct:ipc_msg::msgbuf
 socketfd	include/mqtt.h	/^    mqtt_pal_socket_handle socketfd;$/;"	m	struct:mqtt_client
@@ -514,10 +562,12 @@ str_to_int	humans/human_mqtt.c	/^int str_to_int(const char* str, char len) {$/;"
 str_write_to_file	log/fileTools.c	/^int str_write_to_file(const char* file, const char* str) {$/;"	f
 str_write_to_file	src/fileTools.c	/^int str_write_to_file(const char* file, const char* str) {$/;"	f
 stream	src/ftpget.c	/^  FILE *stream;$/;"	m	struct:FtpFile	file:
+sub_topic	include/mqtt_tr.h	/^	char sub_topic[64];$/;"	m	struct:mqtt_tr_pri
 suback	include/mqtt.h	/^        struct mqtt_response_suback   suback;$/;"	m	union:mqtt_response::__anon2	typeref:struct:mqtt_response::__anon2::mqtt_response_suback
 t	include/rfid.h	/^	float t;$/;"	m	struct:rfid_data
 t	include/runTime.h	/^	struct current_time t; \/* switch state time *\/$/;"	m	struct:runTime	typeref:struct:runTime::current_time
 t	include/sensors/pt100.h	/^	float t;$/;"	m	struct:pt100_data
+t	include/sensors/sht20_t.h	/^	long t;$/;"	m	struct:sht20_t_pri
 tM_hand_event	transfers/transfersManager.c	/^int tM_hand_event(struct transfersManager* tM) {$/;"	f
 tM_hand_msg	transfers/transfersManager.c	/^void tM_hand_msg(struct transfersManager* tM) {$/;"	f
 tM_init	transfers/transfersManager.c	/^void tM_init(struct transfersManager* tM) {$/;"	f
@@ -543,6 +593,7 @@ transfersManager	include/transfersManager.h	/^struct transfersManager {$/;"	s
 tx	include/eventsManager.h	/^	struct msgbuf tx;$/;"	m	struct:eventsManager	typeref:struct:eventsManager::msgbuf
 tx	include/ipc.h	/^	struct msgbuf tx;$/;"	m	struct:msg_body	typeref:struct:msg_body::msgbuf
 type	include/event.h	/^	enum event_t type;$/;"	m	struct:event	typeref:enum:event::event_t
+type	include/producer.h	/^	enum pro_type type;$/;"	m	struct:producer	typeref:enum:producer::pro_type
 type	include/pthread_task_com.h	/^	enum ptask_type type;$/;"	m	struct:pthread_task_com	typeref:enum:pthread_task_com::ptask_type
 type	include/vol.h	/^	enum dat_t type;$/;"	m	struct:vol_data	typeref:enum:vol_data::dat_t
 typical_response_time	include/mqtt.h	/^    double typical_response_time;$/;"	m	struct:mqtt_client
@@ -551,6 +602,7 @@ up_url	include/filesManager.h	/^	char up_url[128];$/;"	m	struct:filesManager
 update_img	src/filesManager.c	/^void *update_img(void* arg) {$/;"	f
 update_ing	include/filesManager.h	/^	char update_ing;$/;"	m	struct:filesManager
 update_state_switch_time	include/runTime.h	/^	void (*update_state_switch_time)(struct runTime* rt);$/;"	m	struct:runTime
+upload_file	include/filesManager.h	/^	char upload_file;$/;"	m	struct:filesManager
 upload_offline_file	src/filesManager.c	/^void *upload_offline_file(void* arg) {$/;"	f
 upload_offline_msg	include/filesManager.h	/^	void (*upload_offline_msg)(struct filesManager* fm);$/;"	m	struct:filesManager
 url	include/filesManager.h	/^	char url[128];$/;"	m	struct:filesManager
@@ -564,4 +616,6 @@ vol_pri	include/vol.h	/^struct vol_pri {$/;"	s
 vol_readData	sensors/vol.c	/^void vol_readData(struct sensor* sensor) {$/;"	f
 vol_sensor_init	sensors/vol.c	/^void vol_sensor_init(char* pri, struct sensor* sensor) {$/;"	f
 wait_event	include/humansManager.h	/^	int (*wait_event)(struct humansManager* hM);$/;"	m	struct:humansManager
+xxx	include/producer.h	/^	xxx,$/;"	e	enum:pro_type
 zero	include/sensors/pt100.h	/^	float zero;$/;"	m	struct:pt100_pri
+zheda_sht_pro_init	producers/zheda_sht.c	/^void zheda_sht_pro_init(struct producer* pro) {$/;"	f

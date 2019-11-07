@@ -42,6 +42,7 @@ int sM_foreach_sensors_offline(struct sensorsManager* sM) {
 //	printf("sensor count %d \n", count);
 
 	while (count--) {
+
 		sensor = (struct sensor*)node;
 
 		printf("sensor name %s \n", sensor->name);
@@ -60,7 +61,6 @@ int sM_foreach_sensors_offline(struct sensorsManager* sM) {
 }
 
 int sM_foreach_sensors(struct sensorsManager* sM) {
-
 	struct node* node = sM->s_list;
 	char count = sM->s_count;
 	int delay = sM->freq;
@@ -82,7 +82,6 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 		sensor = (struct sensor*)node;
 	//	printf("a sensor, do task \n");
 //		s_task();
-
 		printf("sensor name %s \n", sensor->name);
 		sensor->readData_task(sensor);
 		pthread_mutex_lock(lock_send_msg);
@@ -90,13 +89,10 @@ int sM_foreach_sensors(struct sensorsManager* sM) {
 		tr->send_data(tr);
 		pthread_mutex_unlock(lock_send_msg);
 //		sM_sync_event(sM);
-
 		node = node->next;
 	}
-
 //	printf("delay %d us \n", delay);
 	usleep(delay);
-
 	return 0;
 }
 
