@@ -33,6 +33,7 @@ void rT_check_state(struct runTime* rT) {
 	if (rT->n_state != state && !state) {
 		/* net reconnect */
 		printf("notice: online \n");
+		fm->store_runtime_log(fm, "online");
 		rT->update_state_switch_time(rT);
 		rT->n_state = state;
 		tr = obj->tm->select;
@@ -47,6 +48,7 @@ void rT_check_state(struct runTime* rT) {
 		fm->upload_offline_msg(fm);
 	} else if (rT->n_state != state) { /* disconnect */
 		printf("notice: offline \n");
+		fm->store_runtime_log(fm, "offline");
 		rT->update_state_switch_time(rT);
 		rT->n_state = state;
 		fm->current_file = rT->t;

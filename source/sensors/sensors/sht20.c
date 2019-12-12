@@ -55,6 +55,7 @@ void sht20_t_sensor_init(char* ppri, struct sensor* sensor) {
 	struct sht20_t_pri* pri;
 	sensor->pri = malloc(sizeof(struct sht20_t_pri));
 	pri = (struct sht20_t_pri*)sensor->pri;
+	pri->t = 0;
 }
 
 void sht20_t_readData(struct sensor* sensor) {
@@ -133,7 +134,10 @@ void sht20_t_parse4mqtt(struct sensor* sensor, char* msg) {
 }
 
 void sht20_h_sensor_init(char* ppri, struct sensor* sensor) {
+	struct sht20_h_pri* pri;
 	sensor->pri = malloc(sizeof(struct sht20_h_pri));
+	pri = (struct sht20_h_pri*)sensor->pri;
+	pri->h = 0;
 }
 
 void sht20_h_readData(struct sensor* sensor) {

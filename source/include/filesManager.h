@@ -16,7 +16,7 @@ struct filesManager {
 	void (*offline_msg_catEND)(struct filesManager* fm);
 	void (*store_offline_msg)(struct filesManager* fm, char* msg);
 	void (*upload_offline_msg)(struct filesManager* fm);
-	void (*store_runtime_log)(void );
+	void (*store_runtime_log)(struct filesManager* fm, char* log );
 	void (*download_img)(struct filesManager* fm);
 };
 
@@ -24,7 +24,7 @@ void fM_init(struct filesManager* fm);
 void fM_offline_msg_catEND(struct filesManager* fm);
 void fM_store_offline_msg(struct filesManager* fm, char* msg);
 void fM_upload_offline_msg(struct filesManager* fm);
-void fM_store_runtime_log();
+void fM_store_runtime_log(struct filesManager* fm, char* log);
 void fM_download_img(struct filesManager* fm);
 
 #define FILESMANAGER_INIT(fm, runTime) { \

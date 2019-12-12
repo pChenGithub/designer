@@ -1,6 +1,6 @@
 
 NVDIR=$(ROOTDIR)/lib/libnvram
-PWD=$(shell `pwd`)
+PWD=$(shell pwd)
 CC ?= gcc
 EXE_PATH = bin
 

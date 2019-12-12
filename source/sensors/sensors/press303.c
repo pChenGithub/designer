@@ -21,8 +21,9 @@ void press303_sensor_init(char* ppri, struct sensor* sensor) {
 		fprintf(stderr, "open  %s error \n", ADC6);
 		return ;
 	}
-
 	pri->fd = fd;
+	pri->data.v = 0;
+	pri->data.p = 0;
 }
 
 void press303_readData(struct sensor* sensor) {
@@ -35,18 +36,16 @@ void press303_readData(struct sensor* sensor) {
 
 	*v = read_adc(fd);
 	tmp = *v;
-
 	if ( tmp> 0.5) {
 		//pressure = Voltage * 125 - 62.5;//0-500Kpa压力计算公式 305
 		pressure = tmp * 100 - 150;//-100～300Kpa压力计算公式 303
 		printf("###	pressure=%.2lf	###\n", pressure);
 	}
-
 	if (pressure <= 500.00) {
 		*p = pressure;
 	}else {
 		printf("******	error pressure data	******\n");
-		*p = 999;
+		*p = 500;
 	}
 }
 

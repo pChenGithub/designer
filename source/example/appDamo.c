@@ -69,7 +69,7 @@ int main(int argc, char* argv[] ) {
 #if 1
 /* transfersManager */
 #if 1
-	TRANSFERSMANAGER_INIT(transfersManager);
+	TRANSFERSMANAGER_INIT(transfersManager, runTime);
 	tM_init(&transfersManager);
 #endif
 

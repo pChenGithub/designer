@@ -49,6 +49,9 @@ void pt100_sensor_init(char* ppri, struct sensor* sensor) {
 		return ;
 	}
 	pri->fd = fd;
+	pri->data.v = 0;
+	pri->data.r = 0;
+	pri->data.t = 0;
 }
 
 float CalculateTemperature(float fR)
@@ -107,6 +110,10 @@ void pt100_readData(struct sensor* sensor) {
 	tmp = *v;
 	*r = tmp*1000/(3.34-tmp);
 	*t = CalculateTemperature(*r);
+	if (*t<=-197)
+		*t = -197;
+	else if (*t>800)
+		*t = 800;
 	tmp = mfg_read_drift_to_zero();
 	*t = *t+tmp;
 	printf("sensor %s read value %f \n", sensor->name, *v);

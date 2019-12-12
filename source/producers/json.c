@@ -5,14 +5,14 @@
 #include "producersManager.h"
 #include "sensors/door.h"
 
-void quzhou_pro_init(struct producer* pro) {
+void json_pro_init(struct producer* pro) {
 	struct runTime_object* obj = & (pro->pm->rt->object);
 	struct sensorsManager* sm = obj->sm;
 	struct sensor* sensor;
 
 	sensor = SENSOR_INIT(pt100);
 	sm->add_sensor(sm, sensor);
-	sensor = SENSOR_INIT(press303);
+	sensor = SENSOR_INIT(door);
 	sm->add_sensor(sm, sensor);
 }
 

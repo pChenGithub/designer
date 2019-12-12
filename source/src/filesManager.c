@@ -30,12 +30,13 @@ void fM_offline_msg_catEND(struct filesManager* fm) {
 void fM_store_offline_msg(struct filesManager* fm, char* msg) {
 	char file[64];
 	struct current_time* current_file = & fm->current_file;
+	struct runTime* rt = fm->rt;
 	time_t t;
 	struct tm* tm_info;
 	t = time(NULL);
 	tm_info = localtime(&t);
 	if (current_file->hour != tm_info->tm_hour) {
-		sprintf(file, "%s/123456789-%02d_%02d_%02d_%02d", fm->file_path, 
+		sprintf(file, "%s/%s-%02d_%02d_%02d_%02d", fm->file_path, rt->sn,
 				current_file->mon, current_file->day, 
 				current_file->hour, current_file->min);
 		str_write_to_file(file, "END");
@@ -70,7 +71,7 @@ void *upload_offline_file(void* arg) {
 		}
 	}
 	closedir(dir);
-	fm->upload_file = 0;
+		fm->upload_file = 0;
 }
 
 void fM_upload_offline_msg(struct filesManager* fm) {
@@ -82,7 +83,22 @@ void fM_upload_offline_msg(struct filesManager* fm) {
 	pthread_detach(pid);
 }
 
-void fM_store_runtime_log() {}
+void fM_store_runtime_log(struct filesManager* fm, char* log) {
+	time_t t;
+	struct tm* tm_info;
+	struct runTime* rt = fm->rt;
+	char file[64];
+	char msg[128];
+
+	t = time(NULL);
+	tm_info = localtime(&t);
+
+	sprintf(file, "%s/log_%s", fm->file_path, rt->sn);
+	sprintf(msg, "[%02d-%02d %02d:%02d] %s\n", 
+			tm_info->tm_mon, tm_info->tm_mday, 
+			tm_info->tm_hour, tm_info->tm_min, log);
+	str_write_to_file(file, msg);
+}
 
 void *update_img(void* arg) {
 	struct filesManager* fm = (struct filesManager*)arg;

@@ -20,11 +20,13 @@ struct transfersManager {
 	enum mode mode;
 	struct transfer* select;
 	struct transfer transfers[MODECOUNT];
+	struct runTime* rt;
 	/*ipc*/
 };
 
-#define TRANSFERSMANAGER_INIT(name) {\
+#define TRANSFERSMANAGER_INIT(name, runTime) {\
 	struct transfersManager* p = &name; \
+	p->rt = &runTime; \
 }
 
 void tM_init(struct transfersManager* tM);

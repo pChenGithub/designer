@@ -2,6 +2,7 @@
 #include "producersManager.h"
 #include "producers/quzhou.h"
 #include "producers/zheda_sht.h"
+#include "producers/json.h"
 #include <stdlib.h>
 char pM_check_producer(struct producersManager* pm) {
 #if 1
@@ -32,6 +33,10 @@ char pM_check_producer(struct producersManager* pm) {
 	case PRO_ZHEDA_SHT:
 		PRO_INIT(pro, zheda_sht);
 		pro->type = PRO_ZHEDA_SHT;
+		break;
+	case PRO_JSON:
+		PRO_INIT(pro, json);
+		pro->type = PRO_JSON;
 		break;
 	default:
 		break;

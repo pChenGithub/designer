@@ -9,6 +9,7 @@ enum pro_type {
 	PRO_SGS,
 	PRO_GUOHE,
 	PRO_ZHEDA_SHT,
+	PRO_JSON,
 };
 
 struct producer {
