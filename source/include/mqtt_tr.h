@@ -20,6 +20,7 @@ struct mqtt_tr_pri {
 	char sub_topic[64];
 	char sn[19];
 	pthread_mutex_t lock_send_msg;
+	pthread_mutex_t lock_reconnect;
 	char application_message[256];
 	uint8_t sendbuf[2048];
 	uint8_t recvbuf[1024];

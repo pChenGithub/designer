@@ -14,6 +14,7 @@ void fM_init(struct filesManager* fm) {
 	sprintf(buf, "%s", "/tmp");
 	buf = fm->up_url;
 	sprintf(buf, "%s", "ftp://intelab:ZMER%40K+2-Xy7j)Q)0nET@139.219.136.0:8194/monitoring/");
+	pthread_mutex_init(&fm->lock_log_file, NULL);
 	fm->update_ing = 0;
 	fm->upload_file = 0;
 }
@@ -47,7 +48,7 @@ void fM_store_offline_msg(struct filesManager* fm, char* msg) {
 		current_file->min = tm_info->tm_min;
 	}
 
-	sprintf(file, "%s/123456789-%02d_%02d_%02d_%02d", fm->file_path, 
+	sprintf(file, "%s/%s-%02d_%02d_%02d_%02d", rt->sn, fm->file_path, 
 			current_file->mon, current_file->day, 
 			current_file->hour, current_file->min);
 	str_write_to_file(file, msg);
@@ -64,7 +65,7 @@ void *upload_offline_file(void* arg) {
 	dir = opendir(fm->file_path);
 	printf("start upload offline msg \n");
 	while((entry=readdir(dir)) && (rt->n_state)==ONLINE ) {
-		if (!strncmp(entry->d_name, "123456", 6)) {
+		if (!strncmp(entry->d_name, "086021060", 9)) {
 			size = ftp_upload_file(fm->up_url, fm->file_path, entry->d_name);
 			sprintf(f, "%s/%s", fm->file_path, entry->d_name);
 			remove(f);
@@ -90,14 +91,15 @@ void fM_store_runtime_log(struct filesManager* fm, char* log) {
 	char file[64];
 	char msg[128];
 
+	pthread_mutex_lock(&fm->lock_log_file);
 	t = time(NULL);
 	tm_info = localtime(&t);
-
 	sprintf(file, "%s/log_%s", fm->file_path, rt->sn);
 	sprintf(msg, "[%02d-%02d %02d:%02d] %s\n", 
-			tm_info->tm_mon, tm_info->tm_mday, 
+			tm_info->tm_mon+1, tm_info->tm_mday, 
 			tm_info->tm_hour, tm_info->tm_min, log);
 	str_write_to_file(file, msg);
+	pthread_mutex_unlock(&fm->lock_log_file);
 }
 
 void *update_img(void* arg) {

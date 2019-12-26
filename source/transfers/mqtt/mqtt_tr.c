@@ -46,11 +46,16 @@ void mqtt_tr_send(struct transfer* tr) {
 
 	printf("mqtt send data \n");
 //	isprintf(msg, "hello, time is:%s", "12:30");
+
+	pthread_mutex_lock(&p->lock_send_msg);
 	mqtt_publish(client, p->topic, msg, strlen(msg), MQTT_PUBLISH_QOS_0);
 	if (client->error != MQTT_OK) {
 		fprintf(stderr, "error: %s\n", mqtt_error_str(client->error));
-		fm->store_runtime_log(fm, "mqtt publish error");
+		fm->store_runtime_log(fm, "mqtt publish error, reconnect ");
+		fm->store_runtime_log(fm, mqtt_error_str(client->error));
+		mqtt_tr_reconnect(tr);
 	}
+	pthread_mutex_unlock(&p->lock_send_msg);
 }
 
 void mqtt_tr_recv(struct transfer* tr, char* buf) {
@@ -94,6 +99,9 @@ void mqtt_tr_init(struct transfer* tr) {
 	sprintf(p->topic, "%s/%s", "/InteDev/group1", p->sn);
 	sprintf(p->sub_topic, "%s/%s", p->topic, "setting");
 
+	pthread_mutex_init(&p->lock_send_msg, NULL);
+	pthread_mutex_init(&p->lock_reconnect, NULL);
+
 	sockfd = open_nb_socket(p->addr, p->port);
 	if (sockfd == -1) {
 		perror("Failed to open socket: ");
@@ -122,9 +130,12 @@ void mqtt_tr_reconnect(struct transfer* tr) {
 	int sockfd;
 	struct mqtt_client* client = & p->client;
 
+	pthread_mutex_lock(&p->lock_reconnect);
 	printf("mqtt reconnect ... \n");
 	fm->store_runtime_log(fm, "mqtt reconnect ...");
 	while(1) {
+		if (client->socketfd)
+			close(client->socketfd);
 		sockfd = open_nb_socket(p->addr, p->port);
 		if (sockfd == -1) {
 			perror("Failed to open socket: ");
@@ -132,20 +143,22 @@ void mqtt_tr_reconnect(struct transfer* tr) {
 			continue;
 		}
 		mqtt_init(client, sockfd, p->sendbuf, sizeof(p->sendbuf), p->recvbuf, sizeof(p->recvbuf), publish_callback);
+connect_flag:
 		mqtt_connect(client, p->sn, NULL, NULL, 0, NULL, NULL, 0, 5);
 		if (client->error != MQTT_OK) {
 			fprintf(stderr, "error: %s\n", mqtt_error_str(client->error));
 			fm->store_runtime_log(fm, "mqtt re connect error");
 			close(sockfd);
 			sleep(3);
-			continue;
+			goto connect_flag;
 		}
 		mqtt_subscribe(client, p->sub_topic, 0);
-		sleep(3);
 		fm->store_runtime_log(fm, "mqtt reconnect done");
 		printf("mqtt reconnect done \n");
 		break;
 	}
+	pthread_mutex_unlock(&p->lock_reconnect);
+	sleep(3);
 }
 
 

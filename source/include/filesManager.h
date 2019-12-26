@@ -4,6 +4,8 @@
 #include "fileTools.h"
 #include "common.h"
 #include "runTime.h"
+#include <pthread.h>
+
 struct filesManager {
 	char runtime_log[16];
 	char file_path[16];
@@ -13,6 +15,7 @@ struct filesManager {
 	char upload_file;
 	struct current_time current_file; /* offline msg file */
 	struct runTime* rt;
+	pthread_mutex_t lock_log_file;
 	void (*offline_msg_catEND)(struct filesManager* fm);
 	void (*store_offline_msg)(struct filesManager* fm, char* msg);
 	void (*upload_offline_msg)(struct filesManager* fm);

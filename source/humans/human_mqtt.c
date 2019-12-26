@@ -84,7 +84,6 @@ void mqtt_hand_event(struct human* human) {
 	struct mqtt_msg_rcv* msg_format = & pri->msg_format;
 	struct mqtt_tr_pri* tr_pri = (struct mqtt_tr_pri*)tr->pri;
 	char* msg = tr_pri->application_message;
-	pthread_mutex_t* lock_send_msg = & tr_pri->lock_send_msg;
 	struct runTime_object* obj = & human->hM->rt->object;
 	struct filesManager* fm = obj->fm;
 
@@ -99,20 +98,16 @@ void mqtt_hand_event(struct human* human) {
 	}else if (!strncmp(msg_format->event, "quebezero", 6)) {
 		float tmp;
 		tmp = mfg_read_drift_to_zero();
-		pthread_mutex_lock(lock_send_msg);
 		sprintf(msg, "bezero: %.02f", tmp);
 		tr->send_data(tr);
-		pthread_mutex_unlock(lock_send_msg);
 	}else if (!strncmp(msg_format->event, "threshold", 9)) {
 		NVRamWrite("threshold", msg_format->pri_dat);
 	}else if (!strncmp(msg_format->event, "reboot", 6)) {
 		system("reboot");
 	}else if (!strncmp(msg_format->event, "version", 7)) {
-		pthread_mutex_lock(lock_send_msg);
 		//memcpy(msg, "version: 8.8.8.8", 16);
 		get_software_version(msg, 16);
 		tr->send_data(tr);
-		pthread_mutex_unlock(lock_send_msg);
 	}else if (!strncmp(msg_format->event, "serviceip", 9)) {
 		if (check_serviceip(msg_format->pri_dat) == 0) {
 			mfg_write_server_ip(msg_format->pri_dat);
